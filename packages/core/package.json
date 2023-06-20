@@ -27,8 +27,8 @@
     "prepack": "npm run build",
     "publish:dry-run": "npm publish --dry-run",
     "publish:release": "npm publish --access=public",
-    "test": "jest --verbose",
-    "test:coverage": "jest --verbose --coverage --collectCoverageFrom='src/**/*' --debug"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
-import { RandomInterface } from "./RandomInterface";
+import { RandomInterface, RandomInterfaceMethod2 } from "./RandomInterface";
 
-describe("Testing RandomInterface AGAIN", () => {
+describe("Testing RandomInterface", () => {
 
     let randomObject: RandomInterface;
 
@@ -14,5 +14,9 @@ describe("Testing RandomInterface AGAIN", () => {
 
     it("Has correct message value", () => {
         expect(randomObject.message).toStrictEqual("helloWorld");
+    });
+
+    test("method 2", () => {
+        expect(RandomInterfaceMethod2()).toStrictEqual("method 2");
     });
 })
