@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core"
+  ],
+  "scripts": {
+    "dev": "node index.js"
+  }
+}

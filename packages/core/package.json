@@ -1,5 +1,6 @@
 {
   "name": "@headless-game-engine/core",
+  "type": "module",
   "version": "0.0.1",
   "description": "A minimalistic, framework-agnostic JavaScript game engine.",
   "main": "index.js",

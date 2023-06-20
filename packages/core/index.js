@@ -1,1 +1,3 @@
-console.log("Headless Game Engine - Core")
+console.log("Importing: Headless Game Engine - Core")
+
+export const HelloWorld = "Hello World!"
