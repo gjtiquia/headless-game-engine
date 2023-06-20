@@ -1,0 +1,28 @@
+{
+  "name": "@headless-game-engine/core",
+  "version": "0.0.1",
+  "description": "A minimalistic, framework-agnostic JavaScript game engine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gjtiquia/headless-game-engine.git"
+  },
+  "keywords": [
+    "game-engine",
+    "gameengine",
+    "gamedev",
+    "game-dev",
+    "game",
+    "javascript",
+    "typescript"
+  ],
+  "author": "gjtiquia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gjtiquia/headless-game-engine/issues"
+  },
+  "homepage": "https://github.com/gjtiquia/headless-game-engine#readme"
+}
