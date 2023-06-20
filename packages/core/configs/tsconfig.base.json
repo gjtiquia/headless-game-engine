@@ -10,7 +10,7 @@
         "allowJs": true,
         "declaration": true,
         "declarationMap": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
     },
     "include": [
         "../src/**/*"
