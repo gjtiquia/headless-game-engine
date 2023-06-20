@@ -1,11 +1,32 @@
 {
   "name": "@headless-game-engine/core",
-  "type": "module",
   "version": "0.0.1",
   "description": "A minimalistic, framework-agnostic JavaScript game engine.",
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
-    "test": "node index.js"
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "prepack": "npm run build",
+    "publish:dry-run": "npm publish --dry-run",
+    "publish:release": "npm publish --access=public"
   },
   "repository": {
     "type": "git",

@@ -11,13 +11,13 @@ npm login
 See the contents that will be included in the published version of the package.
 
 ```bash
-npm publish --dry-run
+npm run publish:dry-run
 ```
 
-Publish the npm package (Note: `--access=public` is needed for scoped packages)
+Publish a new release of the npm package.
 
 ```bash
-npm publish --access=public
+npm run publish:release
 ```
 
 ## References
