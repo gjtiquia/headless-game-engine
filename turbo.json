@@ -7,17 +7,14 @@
         "build": {
             "dependsOn": [
                 "^build"
-            ],
-            "inputs": [
-                "dist/**"
             ]
         },
         "test": {
-            "outputs": [
-                "coverage/**"
-            ],
             "dependsOn": [
                 "build"
+            ],
+            "outputs": [
+                "coverage/**"
             ]
         },
         "lint": {},
