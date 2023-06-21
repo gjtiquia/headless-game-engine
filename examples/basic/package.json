@@ -3,7 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "test": "node src/index.js",
+        "test": "npm run ECMAScript-Modules-jest",
+        "ECMAScript-Modules-jest": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "dependencies": {
