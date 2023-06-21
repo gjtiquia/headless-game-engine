@@ -1,13 +1,13 @@
 {
-    "name": "examples-basic-typescript",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "tsup src/index.ts --format esm",
-        "test": "node dist/index.js",
-        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    },
-    "dependencies": {
-        "@headless-game-engine/core": "*"
-    }
+  "name": "examples-basic-typescript",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm",
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@headless-game-engine/core": "*"
+  }
 }
