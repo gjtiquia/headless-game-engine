@@ -10,6 +10,7 @@
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:watch": "jest --coverage --watchAll",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "repository": {

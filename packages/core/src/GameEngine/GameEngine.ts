@@ -9,13 +9,18 @@ export const defaultConfig: GameEngineConfig = {
 }
 
 export class GameEngine {
-    private _tick: number;
+    private _tick: number = 0;
 
     constructor(config: GameEngineConfig) {
+        this.initialize;
+    }
+
+    public initialize(): void {
         this._tick = 0;
     }
 
     public awake(): void { }
+
     public fixedUpdate(): void {
         this._tick++;
     }
