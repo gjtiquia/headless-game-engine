@@ -1,3 +1,3 @@
-import { add } from "@headless-game-engine/core";
+import { GameEngine, defaultConfig } from "@headless-game-engine/core";
 
-console.log("Example - Basic Output:", add(1, 2));
+const gameEngine = new GameEngine(defaultConfig);
