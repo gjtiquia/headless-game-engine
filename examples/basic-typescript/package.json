@@ -1,0 +1,14 @@
+{
+    "name": "examples-basic-typescript",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tsup src/index.ts --format esm",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*"
+    }
+}

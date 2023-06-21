@@ -1,0 +1,14 @@
+{
+    "name": "examples-basic",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "test": "npm run ECMAScript-Modules-jest",
+        "test:coverage": "npm run ECMAScript-Modules-jest -- --coverage",
+        "ECMAScript-Modules-jest": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*"
+    }
+}

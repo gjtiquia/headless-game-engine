@@ -1,0 +1,12 @@
+{
+    "name": "examples-basic-commonjs",
+    "private": true,
+    "scripts": {
+        "test": "jest",
+        "test:coverage": "jest --coverage",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*"
+    }
+}
