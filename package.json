@@ -5,10 +5,12 @@
     "examples/*"
   ],
   "scripts": {
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "build:force": "turbo run build --force",
     "test": "turbo run test",
-    "clean": "turbo clean && rm -rf node_modules && turbo daemon clean"
+    "clean": "turbo clean && rm -rf node_modules && turbo daemon clean",
+    "clean:daemon": "turbo daemon clean"
   },
   "devDependencies": {
     "tsup": "^7.0.0",
