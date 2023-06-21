@@ -1,11 +1,29 @@
-import { GameEngine, defaultConfig } from "./index";
+import { GameEngine, defaultConfig } from "./GameEngine";
 
-describe("Basic TypeScript Example", () => {
-    it("should have a game engine", () => {
-        const gameEngine = new GameEngine(defaultConfig);
+describe("@headless-game-engine/core", () => {
 
-        expect(gameEngine).toBeDefined();
-        expect(gameEngine).toBeInstanceOf(GameEngine);
-        expect(gameEngine).not.toBeNull();
+    describe("Game Engine", () => {
+        it("should initialize correctly", () => {
+            const gameEngine = new GameEngine(defaultConfig);
+
+            expect(gameEngine.tick).toStrictEqual(0);
+        })
+
+        it("should tick correctly", () => {
+            const gameEngine = new GameEngine(defaultConfig);
+
+            expect(gameEngine.tick).toStrictEqual(0);
+
+            gameEngine.fixedUpdate();
+            expect(gameEngine.tick).toStrictEqual(1);
+
+            gameEngine.fixedUpdate();
+            expect(gameEngine.tick).toStrictEqual(2);
+
+            gameEngine.fixedUpdate();
+            expect(gameEngine.tick).toStrictEqual(3);
+        })
+
+
     })
 })

@@ -3,6 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
         "build": "tsup src/index.ts --format esm",
         "test": "jest",
         "test:coverage": "jest --coverage",
