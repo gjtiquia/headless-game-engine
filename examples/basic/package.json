@@ -1,0 +1,11 @@
+{
+    "name": "examples-basic",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "test": "node src/index.js"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*"
+    }
+}

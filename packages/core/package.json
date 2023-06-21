@@ -1,11 +1,12 @@
 {
   "name": "@headless-game-engine/core",
-  "type": "module",
   "version": "0.0.1",
   "description": "A minimalistic, framework-agnostic JavaScript game engine.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "node index.js"
+    "build": "tsup src/index.ts --format esm,cjs --dts"
   },
   "repository": {
     "type": "git",

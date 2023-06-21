@@ -1,0 +1,12 @@
+{
+    "name": "examples-basic-typescript",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tsup src/index.ts --format esm",
+        "test": "npm run build && node dist/index.js"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*"
+    }
+}
