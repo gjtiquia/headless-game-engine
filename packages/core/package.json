@@ -6,7 +6,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts"
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "repository": {
     "type": "git",

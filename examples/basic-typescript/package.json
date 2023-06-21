@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "tsup src/index.ts --format esm",
-        "test": "npm run build && node dist/index.js"
+        "test": "node dist/index.js",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "dependencies": {
         "@headless-game-engine/core": "*"
