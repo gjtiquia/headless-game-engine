@@ -2,7 +2,8 @@
     "name": "examples-basic-commonjs",
     "private": true,
     "scripts": {
-        "test": "node src/index.js",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "dependencies": {

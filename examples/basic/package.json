@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "test": "npm run ECMAScript-Modules-jest",
+        "test:coveragee": "npm run test",
         "ECMAScript-Modules-jest": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
