@@ -6,13 +6,19 @@ A minimalistic, framework-agnostic JavaScript game engine.
 
 This monorepo is bootstrapped with Turborepo.
 
-First install turbo globally
+(Optional) It is recommended to install `turbo` globally
 
 ```bash
 npm install turbo --global
 ```
 
 In the root directory:
+
+Intall all packages
+
+```bash
+npm install
+```
 
 Build all packages
 
@@ -24,4 +30,10 @@ Test all packages
 
 ```bash
 npm run test
+```
+
+Clean - delete all generated files, turbo cache and node modules
+
+```bash
+npm run clean
 ```
