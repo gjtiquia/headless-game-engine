@@ -1,1 +1,4 @@
-export { GameObjectConfig, GameObject } from "./GameObject"
+export {
+    GameObjectConfig,
+    GameObject
+} from "./GameObject"

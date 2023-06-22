@@ -2,9 +2,9 @@ import { Vector2 } from "../types";
 import { Component, ComponentConfig, Transform } from "../Component";
 
 export interface GameObjectConfig {
-    // Essential
-    name: string,
-    initialPosition: Vector2,
+    // Required
+    name: string
+    initialPosition: Vector2, // TODO : This should be a serialized field of Transform
 
     // Optional
     initialComponents?: ComponentConfig[]

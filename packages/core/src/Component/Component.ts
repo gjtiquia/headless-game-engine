@@ -13,6 +13,8 @@ export abstract class Component {
         this._gameObject = gameObject;
     }
 
+    public get transform() { return this._gameObject.transform }
+
     public awake(): void { }
     public earlyUpdate(): void { }
     public fixedUpdate(): void { }

@@ -1,6 +1,6 @@
 import { GameEngine, GameObject, GameObjectConfig } from "../src"
 
-describe("Smoke Test", () => {
+describe("Smoke Tests", () => {
     it("should initialize without any game objects correctly", () => {
         const gameEngine = new GameEngine({ initialSceneConfig: {} })
         expect(gameEngine.tick).toBe(0);

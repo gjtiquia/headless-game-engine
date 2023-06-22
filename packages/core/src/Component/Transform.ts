@@ -7,11 +7,13 @@ export class Transform extends Component {
 
     constructor(gameObject: GameObject, initialPosition: Vector2) {
         super(gameObject);
-        this._position = { ...initialPosition }; // Shallow Clone
-        this._previousPosition = { ...initialPosition }; // Shallow Clone
+        this._position = { ...initialPosition };
+        this._previousPosition = { ...initialPosition };
     }
 
-    public get position() { return this._position }
+    public get position() { return { ...this._position } }
+    public set position(value) { this._position = { ...value } }
+    public get previousPosition() { return { ...this._previousPosition } }
 
     public override earlyUpdate(): void {
         this._previousPosition = { ...this._position };
