@@ -1,3 +1,3 @@
-import { GameEngine, defaultConfig } from "@headless-game-engine/core";
+import { GameEngine } from "@headless-game-engine/core";
 
-const gameEngine = new GameEngine(defaultConfig);
+const gameEngine = new GameEngine({ initialSceneConfig: {} });

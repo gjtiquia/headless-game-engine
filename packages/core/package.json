@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
     "build": "tsup src/index.ts --format esm,cjs --dts",
-    "test": "jest",
+    "test": "jest --verbose",
+    "test:detailed": "jest --verbose --detect-open-handles",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll",
+    "test:watch": "jest --watchAll --coverage --verbose",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "repository": {

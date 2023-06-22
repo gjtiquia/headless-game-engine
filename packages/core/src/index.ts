@@ -1,9 +1,24 @@
 export {
-    Vector2
+    Vector2,
 } from "./types"
 
 export {
     GameEngineConfig,
-    defaultConfig,
-    GameEngine
+    GameEngine,
 } from "./GameEngine"
+
+export {
+    SceneConfig,
+    Scene,
+} from "./Scene"
+
+export {
+    GameObjectConfig,
+    GameObject,
+} from "./GameObject"
+
+export {
+    ComponentConfig,
+    Component,
+    Transform,
+} from "./Component"

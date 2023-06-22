@@ -1,6 +1,9 @@
-import { GameEngine, defaultConfig } from "./GameEngine";
+import { GameEngine, GameEngineConfig } from "./GameEngine";
 
 describe("Game Engine", () => {
+    let defaultConfig: GameEngineConfig;
+    beforeEach(() => defaultConfig = { initialSceneConfig: {} })
+
     it("should initialize correctly", () => {
         const gameEngine = new GameEngine(defaultConfig);
 
@@ -9,15 +12,10 @@ describe("Game Engine", () => {
 
     it("should tick correctly", () => {
         const gameEngine = new GameEngine(defaultConfig);
-
         expect(gameEngine.tick).toStrictEqual(0);
 
         gameEngine.fixedUpdate();
-        expect(gameEngine.tick).toStrictEqual(1);
-
         gameEngine.fixedUpdate();
-        expect(gameEngine.tick).toStrictEqual(2);
-
         gameEngine.fixedUpdate();
         expect(gameEngine.tick).toStrictEqual(3);
     })
@@ -28,13 +26,14 @@ describe("Game Engine", () => {
         expect(gameEngine.tick).toStrictEqual(0);
 
         gameEngine.fixedUpdate();
-        expect(gameEngine.tick).toStrictEqual(1);
+        gameEngine.fixedUpdate();
+        expect(gameEngine.tick).toStrictEqual(2);
 
         gameEngine.initialize();
-
         expect(gameEngine.tick).toStrictEqual(0);
 
         gameEngine.fixedUpdate();
-        expect(gameEngine.tick).toStrictEqual(1);
+        gameEngine.fixedUpdate();
+        expect(gameEngine.tick).toStrictEqual(2);
     })
 })

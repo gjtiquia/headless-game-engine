@@ -1,1 +1,4 @@
-export { GameEngineConfig, defaultConfig, GameEngine } from "./GameEngine"
+export {
+    GameEngineConfig,
+    GameEngine
+} from "./GameEngine"
