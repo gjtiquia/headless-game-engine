@@ -3,7 +3,8 @@
         "strict": true,
         "module": "ESNext",
         "target": "es6",
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "moduleResolution": "NodeNext"
     },
     "include": [
         "src/**/*"
