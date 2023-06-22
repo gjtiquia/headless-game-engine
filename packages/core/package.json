@@ -6,8 +6,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
-    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --clean --watch ",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "test": "jest --verbose",
     "test:detailed": "jest --verbose --detect-open-handles",
     "test:coverage": "jest --coverage",

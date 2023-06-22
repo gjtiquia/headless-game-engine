@@ -3,8 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
-        "build": "tsup src/index.ts --format esm",
+        "dev": "tsup src/index.ts --format esm --clean --watch",
+        "build": "tsup src/index.ts --format esm --clean",
         "test": "jest",
         "test:coverage": "jest --coverage",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
