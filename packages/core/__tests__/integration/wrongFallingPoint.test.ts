@@ -20,29 +20,29 @@ describe("Wrong Falling Point Custom Component", () => {
     it("should not be able to move", () => {
         const fallingPointPrefab: GameObjectConfig = {
             name: "FallingPoint",
-            initialPosition: { x: 0, y: 10 },
-            initialComponents: [{ component: WrongFallingPoint }]
+            position: { x: 0, y: 10 },
+            components: [{ component: WrongFallingPoint }]
         }
 
         const sceneConfig: SceneConfig = {
-            initialGameObjects: [fallingPointPrefab]
+            gameObjects: [fallingPointPrefab]
         }
 
         const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig })
 
         const fallingPointInstance = gameEngine.findGameObjectByName("FallingPoint");
         expect(fallingPointInstance).toBeDefined();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.initialPosition);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.initialPosition);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
 
         gameEngine.awake();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.initialPosition);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.initialPosition);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
 
         gameEngine.fixedUpdate();
         gameEngine.fixedUpdate();
         gameEngine.fixedUpdate();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.initialPosition);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.initialPosition);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
     })
 })

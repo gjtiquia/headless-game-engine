@@ -28,12 +28,12 @@ const fps = 40;
 const main = async () => {
     const movingPointPrefab: GameObjectConfig = {
         name: "MovingPoint",
-        initialPosition: { x: screenWidth, y: 0 },
-        initialComponents: [{ component: MovingPoint }]
+        position: { x: screenWidth, y: 0 },
+        components: [{ component: MovingPoint }]
     }
 
     const sceneConfig: SceneConfig = {
-        initialGameObjects: [movingPointPrefab]
+        gameObjects: [movingPointPrefab]
     }
 
     const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig });

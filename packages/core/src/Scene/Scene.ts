@@ -1,14 +1,14 @@
 import { GameObject, GameObjectConfig } from "../GameObject";
 
 export interface SceneConfig {
-    initialGameObjects?: GameObjectConfig[]
+    gameObjects?: GameObjectConfig[]
 }
 
 export class Scene {
     private _gameObjects: GameObject[];
 
     constructor(config: SceneConfig) {
-        this._gameObjects = createGameObjects(config.initialGameObjects);
+        this._gameObjects = createGameObjects(config.gameObjects);
     }
 
     public awake(): void {

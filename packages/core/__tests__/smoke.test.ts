@@ -9,7 +9,7 @@ describe("Smoke Tests", () => {
     it("should initialize an empty game object array correctly", () => {
         const gameEngine = new GameEngine({
             initialSceneConfig: {
-                initialGameObjects: []
+                gameObjects: []
             }
         })
 
@@ -26,12 +26,12 @@ describe("Smoke Tests", () => {
     it("should successfully find a game object by name", () => {
         const dummyConfig: GameObjectConfig = {
             name: "Dummy",
-            initialPosition: { x: 0, y: 0 }
+            position: { x: 0, y: 0 }
         }
 
         const gameEngine = new GameEngine({
             initialSceneConfig: {
-                initialGameObjects: [dummyConfig]
+                gameObjects: [dummyConfig]
             }
         })
 
@@ -43,20 +43,20 @@ describe("Smoke Tests", () => {
     it("should not have a reference to the config object", () => {
         const dummyConfig: GameObjectConfig = {
             name: "Dummy",
-            initialPosition: { x: 0, y: 0 }
+            position: { x: 0, y: 0 }
         }
 
         const gameEngine = new GameEngine({
             initialSceneConfig: {
-                initialGameObjects: [dummyConfig]
+                gameObjects: [dummyConfig]
             }
         })
 
         const dummy = gameEngine.findGameObjectByName(dummyConfig.name);
-        expect(dummy?.transform.position).not.toBe(dummyConfig.initialPosition);
-        expect(dummy?.transform.position).toStrictEqual(dummyConfig.initialPosition);
+        expect(dummy?.transform.position).not.toBe(dummyConfig.position);
+        expect(dummy?.transform.position).toStrictEqual(dummyConfig.position);
 
-        dummyConfig.initialPosition.x = 2;
-        expect(dummy?.transform.position).not.toStrictEqual(dummyConfig.initialPosition);
+        dummyConfig.position.x = 2;
+        expect(dummy?.transform.position).not.toStrictEqual(dummyConfig.position);
     })
 })

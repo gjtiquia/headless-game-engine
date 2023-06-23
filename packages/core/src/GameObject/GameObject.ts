@@ -4,10 +4,10 @@ import { Component, ComponentConfig, Transform } from "../Component";
 export interface GameObjectConfig {
     // Required
     name: string
-    initialPosition: Vector2, // TODO : This should be a serialized field of Transform
+    position: Vector2, // TODO : This should be a serialized field of Transform
 
     // Optional
-    initialComponents?: ComponentConfig[]
+    components?: ComponentConfig[]
 }
 
 export class GameObject {
@@ -18,9 +18,9 @@ export class GameObject {
     constructor(config: GameObjectConfig) {
         this._name = config.name;
 
-        this._components = this.createComponents(config.initialComponents);
+        this._components = this.createComponents(config.components);
 
-        this._transform = new Transform(this, config.initialPosition);
+        this._transform = new Transform(this, config.position);
         this._components.push(this._transform);
     }
 
