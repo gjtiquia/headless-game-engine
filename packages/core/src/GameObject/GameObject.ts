@@ -1,10 +1,10 @@
 import { Vector3 } from "../types";
-import { Component, ComponentConfig, Transform } from "../Component";
+import { Component, ComponentConfig, Transform, TransformFields } from "../Component";
 
 export interface GameObjectConfig {
     // Required
     name: string
-    position: Vector3, // TODO : This should be a serialized field of Transform
+    transform: TransformFields,
 
     // Optional
     components?: ComponentConfig[]
@@ -20,7 +20,7 @@ export class GameObject {
 
         this._components = this.createComponents(config.components);
 
-        this._transform = new Transform(this, config.position);
+        this._transform = new Transform(this, config.transform);
         this._components.push(this._transform);
     }
 
@@ -41,7 +41,7 @@ export class GameObject {
 
     private createComponents(configs?: ComponentConfig[]): Component[] {
         if (configs)
-            return configs.map(config => new config.component(this))
+            return configs.map(config => new config.component(this, config.componentFields ? config.componentFields : {}))
 
         return new Array<Component>();
     }

@@ -5,7 +5,10 @@ describe("GameEngine", () => {
         const gameEngine = new GameEngine({
             initialSceneConfig: {
                 gameObjects: [
-                    { name: "Dummy", position: { x: 0, y: 0, z: 0 } }
+                    {
+                        name: "Dummy",
+                        transform: { position: { x: 0, y: 0, z: 0 } }
+                    }
                 ]
             }
         });

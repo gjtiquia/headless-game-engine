@@ -26,7 +26,7 @@ describe("Smoke Tests", () => {
     it("should successfully find a game object by name", () => {
         const dummyConfig: GameObjectConfig = {
             name: "Dummy",
-            position: { x: 0, y: 0, z: 0 }
+            transform: { position: { x: 0, y: 0, z: 0 } }
         }
 
         const gameEngine = new GameEngine({
@@ -43,7 +43,7 @@ describe("Smoke Tests", () => {
     it("should not have a reference to the config object", () => {
         const dummyConfig: GameObjectConfig = {
             name: "Dummy",
-            position: { x: 0, y: 0, z: 0 }
+            transform: { position: { x: 0, y: 0, z: 0 } }
         }
 
         const gameEngine = new GameEngine({
@@ -53,10 +53,10 @@ describe("Smoke Tests", () => {
         })
 
         const dummy = gameEngine.findGameObjectByName(dummyConfig.name);
-        expect(dummy?.transform.position).not.toBe(dummyConfig.position);
-        expect(dummy?.transform.position).toStrictEqual(dummyConfig.position);
+        expect(dummy?.transform.position).not.toBe(dummyConfig.transform.position);
+        expect(dummy?.transform.position).toStrictEqual(dummyConfig.transform.position);
 
-        dummyConfig.position.x = 2;
-        expect(dummy?.transform.position).not.toStrictEqual(dummyConfig.position);
+        dummyConfig.transform.position.x = 2;
+        expect(dummy?.transform.position).not.toStrictEqual(dummyConfig.transform.position);
     })
 })

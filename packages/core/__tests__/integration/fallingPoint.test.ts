@@ -21,7 +21,7 @@ describe("A Falling Point Custom Component", () => {
     it("should be able to fall from y = 5 and stay on y = 0", () => {
         const fallingPointPrefab: GameObjectConfig = {
             name: "FallingPoint",
-            position: { x: 0, y: 10, z: 0 },
+            transform: { position: { x: 0, y: 10, z: 0 } },
             components: [{ component: FallingPoint }]
         }
 
@@ -33,12 +33,12 @@ describe("A Falling Point Custom Component", () => {
 
         const fallingPointInstance = gameEngine.findGameObjectByName("FallingPoint");
         expect(fallingPointInstance).toBeDefined();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.transform.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.transform.position);
 
         gameEngine.awake();
         expect(fallingPointInstance?.transform.position).toStrictEqual({ x: 0, y: 5, z: 0 });
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position); // expected because value is copied on GameObject.earlyUpdate
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.transform.position); // expected because value is copied on GameObject.earlyUpdate
 
         gameEngine.fixedUpdate();
         expect(fallingPointInstance?.transform.position).toStrictEqual({ x: 0, y: 4, z: 0 });

@@ -20,6 +20,9 @@ export {
 
 export {
     ComponentConfig,
+    ComponentFields,
     Component,
+
+    TransformFields,
     Transform,
 } from "./Component"

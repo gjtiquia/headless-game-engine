@@ -20,7 +20,7 @@ describe("Wrong Falling Point Custom Component", () => {
     it("should not be able to move", () => {
         const fallingPointPrefab: GameObjectConfig = {
             name: "FallingPoint",
-            position: { x: 0, y: 10, z: 0 },
+            transform: { position: { x: 0, y: 10, z: 0 } },
             components: [{ component: WrongFallingPoint }]
         }
 
@@ -32,17 +32,17 @@ describe("Wrong Falling Point Custom Component", () => {
 
         const fallingPointInstance = gameEngine.findGameObjectByName("FallingPoint");
         expect(fallingPointInstance).toBeDefined();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.transform.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.transform.position);
 
         gameEngine.awake();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.transform.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.transform.position);
 
         gameEngine.fixedUpdate();
         gameEngine.fixedUpdate();
         gameEngine.fixedUpdate();
-        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.position);
-        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.position);
+        expect(fallingPointInstance?.transform.position).toStrictEqual(fallingPointPrefab.transform.position);
+        expect(fallingPointInstance?.transform.previousPosition).toStrictEqual(fallingPointPrefab.transform.position);
     })
 })
