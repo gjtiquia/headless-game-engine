@@ -10,7 +10,7 @@
     "build:force": "turbo run build --force",
     "test": "turbo run test",
     "test:force": "turbo run test --force",
-    "clean": "turbo clean && rm -rf node_modules && turbo daemon clean",
+    "clean": "turbo clean &&  turbo daemon clean && rm -rf node_modules",
     "clean:daemon": "turbo daemon clean"
   },
   "devDependencies": {
