@@ -6,8 +6,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/**/*",
-    "CHANGELOG.md"
+    "dist/**/*"
   ],
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --dts --clean --watch ",
