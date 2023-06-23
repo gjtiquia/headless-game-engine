@@ -1,13 +1,17 @@
 {
   "name": "@headless-game-engine/core",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A minimalistic, framework-agnostic JavaScript game engine.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --dts --clean --watch ",
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "build:minify": "tsup src/index.ts --format esm,cjs --dts --minify --clean",
     "test": "jest --verbose",
     "test:detailed": "jest --verbose --detect-open-handles",
     "test:coverage": "jest --coverage",
