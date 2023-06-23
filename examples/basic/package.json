@@ -3,6 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "start": "node src/index.js",
         "test": "npm run ECMAScript-Modules-jest",
         "test:coverage": "npm run ECMAScript-Modules-jest -- --coverage",
         "ECMAScript-Modules-jest": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",

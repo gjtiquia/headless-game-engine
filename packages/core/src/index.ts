@@ -1,19 +1,28 @@
-export interface Vector2 {
-    x: number,
-    y: number
-}
+export {
+    Vector2,
+    Vector3
+} from "./types"
 
-export interface GameEngineConfig {
-    referenceResoulution: Vector2
-}
+export {
+    GameEngineConfig,
+    GameEngine,
+} from "./GameEngine"
 
-export const defaultConfig: GameEngineConfig = {
-    referenceResoulution: { x: 4096, y: 4096 }
-}
+export {
+    SceneConfig,
+    Scene,
+} from "./Scene"
 
-export class GameEngine {
-    constructor(config: GameEngineConfig) {
-        console.log("Game Engine Instantiated")
-        console.log("Reference Resolution: ", config.referenceResoulution)
-    }
-}
+export {
+    GameObjectConfig,
+    GameObject,
+} from "./GameObject"
+
+export {
+    ComponentConfig,
+    ComponentFields,
+    Component,
+
+    TransformFields,
+    Transform,
+} from "./Component"

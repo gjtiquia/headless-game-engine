@@ -3,7 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "tsup src/index.ts --format esm",
+        "start": "npm run build && node dist/index.js",
+        "dev": "tsup src/index.ts --format esm --clean --watch",
+        "build": "tsup src/index.ts --format esm --clean",
         "test": "jest",
         "test:coverage": "jest --coverage",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
