@@ -28,7 +28,7 @@ const fps = 40;
 const main = async () => {
     const movingPointPrefab = {
         name: "MovingPoint",
-        position: { x: screenWidth, y: 0 },
+        position: { x: screenWidth, y: 0, z: 0 },
         components: [{ component: MovingPoint }]
     };
 

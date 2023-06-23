@@ -1,10 +1,10 @@
-import { Vector2 } from "../types";
+import { Vector3 } from "../types";
 import { Component, ComponentConfig, Transform } from "../Component";
 
 export interface GameObjectConfig {
     // Required
     name: string
-    position: Vector2, // TODO : This should be a serialized field of Transform
+    position: Vector3, // TODO : This should be a serialized field of Transform
 
     // Optional
     components?: ComponentConfig[]

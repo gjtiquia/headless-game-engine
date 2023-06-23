@@ -20,7 +20,7 @@ describe("Wrong Falling Point Custom Component", () => {
     it("should not be able to move", () => {
         const fallingPointPrefab: GameObjectConfig = {
             name: "FallingPoint",
-            position: { x: 0, y: 10 },
+            position: { x: 0, y: 10, z: 0 },
             components: [{ component: WrongFallingPoint }]
         }
 

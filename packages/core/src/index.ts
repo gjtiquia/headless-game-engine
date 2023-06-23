@@ -1,5 +1,6 @@
 export {
     Vector2,
+    Vector3
 } from "./types"
 
 export {

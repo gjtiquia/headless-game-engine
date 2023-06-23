@@ -1,11 +1,11 @@
-import { Vector2 } from "../types";
+import { Vector3 } from "../types";
 import { Component, GameObject } from "./Component";
 
 export class Transform extends Component {
-    private _position: Vector2;
-    private _previousPosition: Vector2;
+    private _position: Vector3;
+    private _previousPosition: Vector3;
 
-    constructor(gameObject: GameObject, initialPosition: Vector2) {
+    constructor(gameObject: GameObject, initialPosition: Vector3) {
         super(gameObject);
         this._position = { ...initialPosition };
         this._previousPosition = { ...initialPosition };
