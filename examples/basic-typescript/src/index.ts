@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-game-engine/core";
+import { testFunction } from "@headless-game-engine/clock";
 
 const SCREEN_WIDTH = 80;
 const REFRESH_RATE = 60;

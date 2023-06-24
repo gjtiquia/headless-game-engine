@@ -1,4 +1,5 @@
 import { GameEngine } from "@headless-game-engine/core";
+import { testFunction } from "@headless-game-engine/clock";
 
 describe("GameEngine", () => {
     it("should initialize correctly", () => {
@@ -15,5 +16,7 @@ describe("GameEngine", () => {
 
         expect(gameEngine.tick).toStrictEqual(0);
         expect(gameEngine.findGameObjectByName("Dummy")).toBeDefined();
+
+        expect(testFunction()).toBeTruthy();
     })
 })
