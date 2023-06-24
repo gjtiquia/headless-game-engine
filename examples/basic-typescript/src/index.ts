@@ -4,21 +4,19 @@ import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-
 
 const SCREEN_WIDTH = 80;
 const REFRESH_RATE = 60;
+const TOTAL_RUNTIME = 10; // seconds
 
 const TICK_RATE = 40;
-const TOTAL_TICKS = 350;
 
 class MovingPoint extends Component {
-    private _acceleration = -0.03;
+    private _acceleration = -50;
     private _velocity = 0;
 
     public override fixedUpdate(): void {
         const currentPosition = this.transform.position;
 
-        // TODO : DeltaTime! with getFixedDeltaTime()
-
-        this._velocity += this._acceleration;
-        currentPosition.x += this._velocity;
+        this._velocity += this._acceleration * getFixedDeltaTime();
+        currentPosition.x += this._velocity * getFixedDeltaTime();
 
         if (currentPosition.x < 0) {
             this._velocity *= -1 * 0.65
@@ -59,9 +57,7 @@ const main = async () => {
 
     const stopGameEngineLoop = startGameEngineLoop(gameEngine, TICK_RATE);
 
-    while (gameEngine.tick <= TOTAL_TICKS) {
-        await sleep(1000 / REFRESH_RATE);
-    }
+    await sleep(TOTAL_RUNTIME * 1000);
 
     console.clear();
 
@@ -95,7 +91,7 @@ const render = (position: number, tick: number) => {
     const rightSpace = " ".repeat(SCREEN_WIDTH - position);
 
     console.clear();
-    console.log(`Refresh Rate: ${REFRESH_RATE},Tick Rate: ${TICK_RATE}, Ticks: ${tick}/${TOTAL_TICKS}`);
+    console.log(`Refresh Rate: ${REFRESH_RATE}, Tick Rate: ${TICK_RATE}, Ticks: ${tick}`);
     console.log(`|${leftSpace}${pointGraphic}${rightSpace}|`)
 }
 
