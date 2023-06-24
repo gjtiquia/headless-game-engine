@@ -2,6 +2,12 @@
 
 import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-game-engine/core";
 
+const SCREEN_WIDTH = 80;
+const REFRESH_RATE = 60;
+
+const TICK_RATE = 40;
+const TOTAL_TICKS = 350;
+
 class MovingPoint extends Component {
     private _acceleration = -0.03;
     private _velocity = 0;
@@ -9,7 +15,7 @@ class MovingPoint extends Component {
     public override fixedUpdate(): void {
         const currentPosition = this.transform.position;
 
-        // TODO : DeltaTime!
+        // TODO : DeltaTime! with getFixedDeltaTime()
 
         this._velocity += this._acceleration;
         currentPosition.x += this._velocity;
@@ -22,13 +28,6 @@ class MovingPoint extends Component {
         this.transform.position = currentPosition;
     }
 }
-
-
-const SCREEN_WIDTH = 80;
-const REFRESH_RATE = 60;
-
-const TICK_RATE = 40;
-const TOTAL_TICKS = 350;
 
 const main = async () => {
     const movingPointPrefab: GameObjectConfig = {
@@ -58,25 +57,37 @@ const main = async () => {
         render(position, tick);
     }, 1000 / REFRESH_RATE);
 
-    gameEngine.awake();
-    gameEngine.fixedUpdate();
-    const gameEngineInterval = setInterval(() => {
-        gameEngine.fixedUpdate();
-    }, 1000 / TICK_RATE);
+    const stopGameEngineLoop = startGameEngineLoop(gameEngine, TICK_RATE);
 
     while (gameEngine.tick <= TOTAL_TICKS) {
         await sleep(1000 / REFRESH_RATE);
     }
 
-    clearInterval(gameEngineInterval);
-    clearInterval(renderInterval);
-
     console.clear();
+
+    stopGameEngineLoop();
+    clearInterval(renderInterval);
 }
 
 const sleep = (ms: number) => {
     return new Promise((resolve, reject) => setTimeout(resolve, ms));
 }
+
+const startGameEngineLoop = (gameEngineInstance: GameEngine, tickRate: number) => {
+    gameEngineInstance.awake();
+    gameEngineInstance.fixedUpdate();
+
+    const fixedUpdateInterval = setInterval(() => {
+        gameEngineInstance.fixedUpdate();
+    }, 1000 / tickRate)
+
+    return () => {
+        console.log("Clearing game engine fixed update interval...")
+        clearInterval(fixedUpdateInterval);
+    }
+}
+
+const getFixedDeltaTime = () => 1 / TICK_RATE;
 
 const render = (position: number, tick: number) => {
     const pointGraphic = "0";
