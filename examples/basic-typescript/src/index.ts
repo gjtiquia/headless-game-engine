@@ -9,6 +9,8 @@ class MovingPoint extends Component {
     public override fixedUpdate(): void {
         const currentPosition = this.transform.position;
 
+        // TODO : DeltaTime!
+
         this._velocity += this._acceleration;
         currentPosition.x += this._velocity;
 
@@ -21,14 +23,17 @@ class MovingPoint extends Component {
     }
 }
 
-const screenWidth = 80;
-const totalUpdateCount = 350;
-const fps = 40;
+
+const SCREEN_WIDTH = 80;
+const REFRESH_RATE = 60;
+
+const TICK_RATE = 40;
+const TOTAL_TICKS = 350;
 
 const main = async () => {
     const movingPointPrefab: GameObjectConfig = {
         name: "MovingPoint",
-        transform: { position: { x: screenWidth, y: 0, z: 0 } },
+        transform: { position: { x: SCREEN_WIDTH, y: 0, z: 0 } },
         components: [{ component: MovingPoint }]
     }
 
@@ -44,18 +49,27 @@ const main = async () => {
         return;
     }
 
-    gameEngine.awake();
-
-    let updateCount = 0;
-    while (updateCount <= totalUpdateCount) {
-        gameEngine.fixedUpdate();
+    const renderInterval = setInterval(() => {
+        // TODO : Interpolation
 
         const position = Math.round(movingPointInstance.transform.position.x);
-        render(position, updateCount);
+        const tick = gameEngine.tick;
 
-        updateCount++;
-        await sleep(1000 / fps);
+        render(position, tick);
+    }, 1000 / REFRESH_RATE);
+
+    gameEngine.awake();
+    gameEngine.fixedUpdate();
+    const gameEngineInterval = setInterval(() => {
+        gameEngine.fixedUpdate();
+    }, 1000 / TICK_RATE);
+
+    while (gameEngine.tick <= TOTAL_TICKS) {
+        await sleep(1000 / REFRESH_RATE);
     }
+
+    clearInterval(gameEngineInterval);
+    clearInterval(renderInterval);
 
     console.clear();
 }
@@ -64,13 +78,13 @@ const sleep = (ms: number) => {
     return new Promise((resolve, reject) => setTimeout(resolve, ms));
 }
 
-const render = (position: number, updateCount: number) => {
+const render = (position: number, tick: number) => {
     const pointGraphic = "0";
     const leftSpace = " ".repeat(position);
-    const rightSpace = " ".repeat(screenWidth - position);
+    const rightSpace = " ".repeat(SCREEN_WIDTH - position);
 
     console.clear();
-    console.log(`FPS: ${fps}, Update Count: ${updateCount}/${totalUpdateCount}`);
+    console.log(`Refresh Rate: ${REFRESH_RATE},Tick Rate: ${TICK_RATE}, Ticks: ${tick}/${TOTAL_TICKS}`);
     console.log(`|${leftSpace}${pointGraphic}${rightSpace}|`)
 }
 
