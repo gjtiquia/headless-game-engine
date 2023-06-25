@@ -1,4 +1,4 @@
-import { Clock } from "../src"
+import { Clock } from "./Clock"
 
 describe("Clock", () => {
 

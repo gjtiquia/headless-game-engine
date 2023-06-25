@@ -1,4 +1,4 @@
-import { Time } from "./index"
+import { Time } from "./Time"
 
 describe("Time", () => {
 
