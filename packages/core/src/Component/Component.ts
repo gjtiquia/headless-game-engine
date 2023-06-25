@@ -23,4 +23,5 @@ export abstract class Component {
     public awake(): void { }
     public earlyUpdate(): void { }
     public fixedUpdate(): void { }
+    public onDestroy(): void { }
 }

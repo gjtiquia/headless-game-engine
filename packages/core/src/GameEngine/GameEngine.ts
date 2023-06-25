@@ -41,6 +41,10 @@ export class GameEngine {
         this._tick++;
     }
 
+    public destroy(): void {
+        this._activeScene.destroy();
+    }
+
     public findGameObjectByName(name: string): GameObject | undefined {
         return this._activeScene.findGameObjectByName(name);
     }

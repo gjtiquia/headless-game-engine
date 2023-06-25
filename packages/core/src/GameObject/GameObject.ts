@@ -39,6 +39,10 @@ export class GameObject {
         this._components.forEach(component => component.fixedUpdate());
     }
 
+    public destroy(): void {
+        this._components.forEach(component => component.onDestroy());
+    }
+
     private createComponents(configs?: ComponentConfig[]): Component[] {
         if (configs)
             return configs.map(config => new config.component(this, config.componentFields ? config.componentFields : {}))

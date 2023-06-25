@@ -20,9 +20,18 @@ export class Scene {
         this._gameObjects.forEach(gameObject => gameObject.fixedUpdate());
     }
 
+    public destroy(): void {
+        this._gameObjects.forEach(gameObject => gameObject.destroy());
+        this.clearGameObjectsArray();
+    }
+
     public findGameObjectByName(name: string): GameObject | undefined {
         const gameObject = this._gameObjects.find(gameObject => gameObject.name === name);
         return gameObject;
+    }
+
+    private clearGameObjectsArray(): void {
+        this._gameObjects.length = 0;
     }
 }
 
