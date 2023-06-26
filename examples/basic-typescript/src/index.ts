@@ -3,6 +3,8 @@
 import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-game-engine/core";
 import { EngineClock, Clock, Time, sleep } from "@headless-game-engine/clock";
 
+import * as readline from "readline"
+
 const SCREEN_WIDTH = 80;
 const REFRESH_RATE = 60;
 const TOTAL_RUNTIME = 10; // seconds
@@ -10,14 +12,31 @@ const TOTAL_RUNTIME = 10; // seconds
 const TICK_RATE = 40;
 
 const main = async () => {
-    EngineClock.start(gameEngine);
-    renderClock.start();
+    readline.emitKeypressEvents(process.stdin);
 
-    await sleep(TOTAL_RUNTIME * 1000);
-    console.clear();
+    process.stdin.setRawMode(true);
+    process.stdin.on('keypress', (str, key) => {
 
-    EngineClock.stop();
-    renderClock.stop();
+        // "Raw" mode so we must do our own kill switch
+        if (key && key.ctrl && key.name === "c") {
+            process.exit();
+        }
+
+        // User has triggered a keypress, now do whatever we want!
+        // ...
+
+        console.log(str, key);
+    });
+
+
+    // EngineClock.start(gameEngine);
+    // renderClock.start();
+
+    // await sleep(TOTAL_RUNTIME * 1000);
+    // console.clear();
+
+    // EngineClock.stop();
+    // renderClock.stop();
 }
 
 class MovingPoint extends Component {
