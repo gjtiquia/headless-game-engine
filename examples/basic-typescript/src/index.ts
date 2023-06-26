@@ -15,17 +15,18 @@ const main = async () => {
     readline.emitKeypressEvents(process.stdin);
 
     process.stdin.setRawMode(true);
-    process.stdin.on('keypress', (str, key) => {
+    process.stdin.on('keypress', (str: string, key: readline.Key) => {
+
+        console.log(str, key);
 
         // "Raw" mode so we must do our own kill switch
-        if (key && key.ctrl && key.name === "c") {
+        if (key.ctrl && key.name === "c") {
             process.exit();
         }
 
         // User has triggered a keypress, now do whatever we want!
         // ...
 
-        console.log(str, key);
     });
 
 
