@@ -14,6 +14,10 @@ class FallingPoint extends Component {
 
         this.transform.position = currentPosition;
     }
+
+    public helloWorld(): string {
+        return "Hello World!";
+    }
 }
 
 describe("A Falling Point Custom Component", () => {
@@ -60,5 +64,46 @@ describe("A Falling Point Custom Component", () => {
         gameEngine.fixedUpdate();
         expect(fallingPointInstance?.transform.position).toStrictEqual({ x: 0, y: 0, z: 0 });
         expect(fallingPointInstance?.transform.previousPosition).toStrictEqual({ x: 0, y: 0, z: 0 });
+    })
+
+    it("should be able to get component", () => {
+        const fallingPointPrefab: GameObjectConfig = {
+            name: "FallingPoint",
+            transform: { position: { x: 0, y: 10, z: 0 } },
+            components: [{ component: FallingPoint }]
+        }
+
+        const sceneConfig: SceneConfig = {
+            gameObjects: [fallingPointPrefab]
+        }
+
+        const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig })
+
+        const fallingPointInstance = gameEngine.findGameObjectByName("FallingPoint");
+
+        const fallingPointComponent = fallingPointInstance?.getComponent(FallingPoint);
+        expect(fallingPointComponent).toBeDefined();
+        expect(fallingPointComponent).toBeInstanceOf(FallingPoint);
+        expect(fallingPointComponent?.helloWorld()).toStrictEqual("Hello World!");
+    })
+
+    it("should return undefined for component that does not exist", () => {
+        class DummyComponent extends Component { }
+
+        const fallingPointPrefab: GameObjectConfig = {
+            name: "FallingPoint",
+            transform: { position: { x: 0, y: 10, z: 0 } },
+            components: [{ component: FallingPoint }]
+        }
+
+        const sceneConfig: SceneConfig = {
+            gameObjects: [fallingPointPrefab]
+        }
+
+        const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig })
+
+        const fallingPointInstance = gameEngine.findGameObjectByName("FallingPoint");
+        const dummyComponent = fallingPointInstance?.getComponent(DummyComponent);
+        expect(dummyComponent).toBeUndefined();
     })
 })

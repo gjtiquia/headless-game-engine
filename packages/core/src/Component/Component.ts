@@ -1,9 +1,11 @@
 import { GameObject } from "../GameObject"
 export { GameObject } from "../GameObject" // For Transform to use
 
+export type ComponentConstructor<T extends Component> = new (gameObject: GameObject, fields: ComponentFields) => T;
+
 export interface ComponentConfig {
     // Match the constructor signature of Component
-    component: new (gameObject: GameObject, fields: ComponentFields) => Component
+    component: ComponentConstructor<Component>
     componentFields?: ComponentFields
 }
 

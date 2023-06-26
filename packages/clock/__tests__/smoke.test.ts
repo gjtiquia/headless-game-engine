@@ -55,4 +55,30 @@ describe("SmokeTest", () => {
 
         expect(gameEngine.tick).toBe(4);
     })
+
+    it("should destroy the game engine on stop", () => {
+        const gameEngine = new GameEngine({
+            initialSceneConfig: {
+                gameObjects: [
+                    {
+                        name: "Dummy",
+                        transform: { position: { x: 0, y: 0, z: 0 } }
+                    }
+                ]
+            }
+        });
+
+        expect(gameEngine.tick).toStrictEqual(0);
+        expect(gameEngine.findGameObjectByName("Dummy")).toBeDefined();
+
+        Time.tickRate = 1; // 1 tick per second
+        expect(Time.fixedDeltaTime).toBe(1); // Unit in seconds
+
+        EngineClock.start(gameEngine);
+        jest.advanceTimersByTime(3.5 * 1000); // Unit in ms
+        EngineClock.stop();
+
+        expect(gameEngine.tick).toBe(4);
+        expect(gameEngine.findGameObjectByName("Dummy")).toBeUndefined();
+    })
 })
