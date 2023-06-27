@@ -14,14 +14,21 @@ export async function main() {
     process.exit();
 }
 
+const basePlatform = gameEngine.findGameObjectByName("Base Platform");
 const platform1 = gameEngine.findGameObjectByName("Platform 1");
 const platform2 = gameEngine.findGameObjectByName("Platform 2");
 
 function render() {
     canvas.clear();
 
-    canvas.drawRect({ x: 0, y: 0 }, { x: 1, y: 1 })
-    canvas.drawRect({ x: 0, y: 2 }, { x: 10, y: 3 })
+    if (basePlatform)
+        canvas.drawRect(basePlatform.transform.position, { x: SCREEN_SIZE.x, y: 1 }, "=")
+
+    if (platform1)
+        canvas.drawRect(platform1.transform.position, { x: 20, y: 1 }, "=")
+
+    if (platform2)
+        canvas.drawRect(platform2.transform.position, { x: 20, y: 1 }, "=")
 
     canvas.paint();
 }
