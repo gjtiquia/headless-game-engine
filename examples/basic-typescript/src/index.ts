@@ -6,10 +6,10 @@ import { EngineClock, Clock, Time, sleep } from "@headless-game-engine/clock";
 import * as readline from "readline"
 
 const SCREEN_WIDTH = 30;
-const REFRESH_RATE = 60;
+const REFRESH_RATE = 120;
 const MAX_RUNTIME = 300; // seconds
 
-const TICK_RATE = 40;
+const TICK_RATE = 60;
 
 const main = async () => {
     EngineClock.start(gameEngine);
@@ -84,7 +84,7 @@ const render = () => {
 
     console.clear();
     console.log(`Refresh Rate: ${REFRESH_RATE}, Tick Rate: ${TICK_RATE}, Ticks: ${gameEngine.tick}`);
-    console.log(`\n➡️|${leftSpace}${pointGraphic}${rightSpace}|`)
+    console.log(`\n➡️${leftSpace}${pointGraphic}${rightSpace}|`)
     console.log("\nHeadless Game Engine Demo");
     console.log("\nPress Space to Jump.");
     console.log("Press Ctrl-C to Quit.");
