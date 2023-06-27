@@ -14,8 +14,15 @@ export async function main() {
     process.exit();
 }
 
+const platform1 = gameEngine.findGameObjectByName("Platform 1");
+const platform2 = gameEngine.findGameObjectByName("Platform 2");
+
 function render() {
     canvas.clear();
-    canvas.draw();
+
+    canvas.drawRect({ x: 0, y: 0 }, { x: 1, y: 1 })
+    canvas.drawRect({ x: 0, y: 2 }, { x: 10, y: 3 })
+
+    canvas.paint();
 }
 
