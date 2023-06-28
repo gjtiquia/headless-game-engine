@@ -56,10 +56,16 @@ export class GameObject {
 
     // PRIVATE METHODS
     private createComponents(configs?: ComponentConfig<any, any>[]): Component[] {
-        if (configs)
-            return configs.map(config => new config.component(this, config.componentFields ? config.componentFields : {}))
+        if (!configs)
+            return new Array<Component>();
 
-        return new Array<Component>();
+
+        return configs.map(config => {
+            if (config.component === undefined)
+                throw new Error("Component Constructor is undefined! This may occur due to circular dependencies. Have you defined the class before passing it in the game object config?");
+
+            return new config.component(this, config.componentFields ? config.componentFields : {})
+        })
     }
 }
 
