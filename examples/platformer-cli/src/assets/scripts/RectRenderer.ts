@@ -15,4 +15,8 @@ export class RectRenderer extends Component {
     public get size(): Vector2 {
         return this._size;
     }
+
+    public setSize(size: Vector2) {
+        this._size = size;
+    }
 }
