@@ -1,4 +1,4 @@
-import { Component, ComponentConfig, ComponentConstructor, Transform, TransformFields } from "../Component";
+import { Component, ComponentConfig, ComponentConstructor, ComponentFields, Transform, TransformFields } from "../Component";
 
 export interface GameObjectConfig {
     // Required
@@ -6,7 +6,7 @@ export interface GameObjectConfig {
     transform: TransformFields,
 
     // Optional
-    components?: ComponentConfig[]
+    components?: ComponentConfig<any, any>[]
 }
 
 export class GameObject {
@@ -45,7 +45,7 @@ export class GameObject {
     }
 
     // PUBLIC METHODS
-    public getComponent<T extends Component>(componentClass: ComponentConstructor<T>): T | undefined {
+    public getComponent<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T | undefined {
         const component = this._components.find(component => component instanceof componentClass);
 
         if (!component)
@@ -55,7 +55,7 @@ export class GameObject {
     }
 
     // PRIVATE METHODS
-    private createComponents(configs?: ComponentConfig[]): Component[] {
+    private createComponents(configs?: ComponentConfig<any, any>[]): Component[] {
         if (configs)
             return configs.map(config => new config.component(this, config.componentFields ? config.componentFields : {}))
 
