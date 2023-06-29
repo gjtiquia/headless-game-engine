@@ -19,20 +19,14 @@ const basePlatform = gameEngine.findGameObjectByName("Base Platform");
 const baseRectRenderer = basePlatform?.getComponent(RectRenderer);
 baseRectRenderer?.setSize({ x: SCREEN_SIZE.x, y: 1 })
 
-const platform1 = gameEngine.findGameObjectByName("Platform 1");
-const platform2 = gameEngine.findGameObjectByName("Platform 2");
+const rectRenderers = gameEngine.getComponents(RectRenderer);
 
 function render() {
     canvas.clear();
 
-    if (basePlatform && baseRectRenderer)
-        canvas.drawRect(basePlatform.transform.position, baseRectRenderer.size, baseRectRenderer.character)
-
-    if (platform1)
-        canvas.drawRect(platform1.transform.position, { x: 20, y: 1 }, "=")
-
-    if (platform2)
-        canvas.drawRect(platform2.transform.position, { x: 20, y: 1 }, "=")
+    rectRenderers.forEach(renderer =>
+        canvas.drawRect(renderer.transform.position, renderer.size, renderer.character)
+    );
 
     canvas.paint();
 }

@@ -32,6 +32,8 @@ export class Scene {
     }
 
     public getComponents<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T[] {
+        // TODO : Would be nice if there was a list of components, so that can keep the reference to that list, no need to run through the entire game object array each time want to cache the list of components
+
         return this._gameObjects.reduce<T[]>((componentArray, gameObject) => {
             const component = gameObject.getComponent(componentClass);
 

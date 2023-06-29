@@ -10,13 +10,23 @@ export const gameScene: SceneConfig = {
         },
         {
             ...PlatformPrefab,
-            name: "Platform 1",
             transform: { position: { x: 10, y: 5, z: 0 } }
         },
         {
             ...PlatformPrefab,
-            name: "Platform 2",
             transform: { position: { x: 50, y: 5, z: 0 } }
+        },
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 30, y: 10, z: 0 } }
+        },
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 10, y: 15, z: 0 } }
+        },
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 50, y: 15, z: 0 } }
         }
     ]
 }

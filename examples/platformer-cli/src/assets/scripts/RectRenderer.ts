@@ -5,6 +5,8 @@ const DEFAULT_CHARACTER = "x";
 export interface RectRendererFields extends ComponentFields {
     size: Vector2
     character?: string
+
+    // TODO : Sorting Order
 }
 
 export class RectRenderer extends Component {
