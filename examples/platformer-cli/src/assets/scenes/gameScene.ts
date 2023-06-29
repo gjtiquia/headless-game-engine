@@ -1,6 +1,7 @@
 import { SceneConfig } from "@headless-game-engine/core";
 import { PlatformPrefab } from "../prefabs/PlatformPrefab.js";
 import { PlayerPrefab } from "../prefabs/PlayerPrefab.js";
+import { BoxPrefab } from "../prefabs/BoxPrefab.js";
 
 export const gameScene: SceneConfig = {
     gameObjects: [
@@ -32,6 +33,10 @@ export const gameScene: SceneConfig = {
         {
             ...PlatformPrefab,
             transform: { position: { x: 50, y: 15, z: 0 } }
+        },
+        {
+            ...BoxPrefab,
+            transform: { position: { x: 40, y: 3, z: 0 } }
         }
     ]
 }

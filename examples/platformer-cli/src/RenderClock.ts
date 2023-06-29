@@ -32,7 +32,7 @@ export abstract class RenderClock {
         this._canvas.clear();
 
         this._rectRenderers.forEach(renderer =>
-            this._canvas.drawRect(renderer.transform.position, renderer.size, renderer.character)
+            this._canvas.drawRect(renderer.bottomLeftPosition, renderer.size, renderer.character)
         );
 
         this._canvas.paint();
