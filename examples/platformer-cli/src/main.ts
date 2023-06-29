@@ -26,7 +26,7 @@ function render() {
     canvas.clear();
 
     if (basePlatform && baseRectRenderer)
-        canvas.drawRect(basePlatform.transform.position, baseRectRenderer.size, "=")
+        canvas.drawRect(basePlatform.transform.position, baseRectRenderer.size, baseRectRenderer.character)
 
     if (platform1)
         canvas.drawRect(platform1.transform.position, { x: 20, y: 1 }, "=")
