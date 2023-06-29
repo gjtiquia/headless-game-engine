@@ -1,8 +1,10 @@
 import { Vector2 } from "@headless-game-engine/core";
 
+const DEFAULT_BACKGROUND = " ";
+
 export interface CanvasConfig {
     size: Vector2
-    background: string
+    background?: string
 }
 
 
@@ -13,7 +15,7 @@ export class Canvas {
 
     constructor(config: CanvasConfig) {
         this._size = config.size;
-        this._background = config.background;
+        this._background = config.background ? config.background : DEFAULT_BACKGROUND;
         this._characterTable = [];
 
         this.clear();

@@ -2,37 +2,24 @@ import { EngineClock, sleep } from "@headless-game-engine/clock";
 import { Vector2 } from "@headless-game-engine/core";
 
 import { gameEngine } from "./gameEngine.config.js";
-import { Canvas } from "./Canvas.js";
 import { RectRenderer } from "./assets/index.js";
+import { RenderClock } from "./RenderClock.js";
 
 const SCREEN_SIZE: Vector2 = { x: 80, y: 20 }
-const canvas = new Canvas({ size: SCREEN_SIZE, background: " " });
-
-export async function main() {
-    EngineClock.start(gameEngine);
-
-    while (true) {
-        render();
-        await sleep(15); // TODO : Refactor into Refresh Rate
-    }
-
-    // console.clear();
-    // process.exit();
-}
+const REFRESH_RATE = 120;
 
 const basePlatform = gameEngine.findGameObjectByName("Base Platform");
 const baseRectRenderer = basePlatform?.getComponent(RectRenderer);
 baseRectRenderer?.setSize({ x: SCREEN_SIZE.x, y: 1 })
 
-const rectRenderers = gameEngine.getComponents(RectRenderer);
+export async function main() {
+    EngineClock.start(gameEngine);
+    RenderClock.start(gameEngine, SCREEN_SIZE, REFRESH_RATE)
 
-function render() {
-    canvas.clear();
-
-    rectRenderers.forEach(renderer =>
-        canvas.drawRect(renderer.transform.position, renderer.size, renderer.character)
-    );
-
-    canvas.paint();
+    // console.clear();
+    // process.exit();
 }
+
+
+
 
