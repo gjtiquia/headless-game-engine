@@ -1,5 +1,6 @@
 import { Time } from "@headless-game-engine/clock";
 import { Component, Vector2 } from "@headless-game-engine/core";
+import { Physics2D } from "../../Physics2D.js";
 
 const GRAVITY = -80;
 const GRAVITY_MULTIPLIER = 2.5;
@@ -17,7 +18,8 @@ export class PlayerAgent extends Component {
     public override fixedUpdate(): void {
         // return;
 
-        const currentPosition = this.transform.position;
+        const previousPosition = this.transform.position;
+        const currentPosition = { ...previousPosition };
 
         if (this._velocity.y <= 0)
             this._acceleration.y = GRAVITY_MULTIPLIER * GRAVITY;
@@ -36,6 +38,7 @@ export class PlayerAgent extends Component {
         currentPosition.x += this._velocity.x * Time.fixedDeltaTime;
         currentPosition.y += this._velocity.y * Time.fixedDeltaTime;
 
+        // TODO : Replace with raycast
         if (currentPosition.y < 1) {
             currentPosition.y = 1;
             this._velocity.y = 0;
@@ -45,6 +48,8 @@ export class PlayerAgent extends Component {
     }
 
     public jump() {
+        if (!this.isOnGround()) return;
+
         this._velocity.y = JUMP_VELOCITY;
     }
 
@@ -59,5 +64,24 @@ export class PlayerAgent extends Component {
     public stop() {
         this._acceleration.x = 0;
         this._velocity.x = 0;
+    }
+
+    private isOnGround(): boolean {
+
+        if (this.transform.position.y === 1)
+            return true;
+
+        return false;
+
+
+        // TODO : Raycast below
+
+        // const currentHeight = this.transform.position.y;
+
+        // const colliders = Physics2D.raycastPoint({ x: this.transform.position.x, y: currentHeight - 1 });
+        // if (colliders.length <= 0)
+        //     return false;
+
+        // return true;
     }
 }

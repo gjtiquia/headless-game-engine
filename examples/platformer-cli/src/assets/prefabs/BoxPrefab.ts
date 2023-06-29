@@ -9,6 +9,8 @@ const RectRendererComponent: ComponentConfig<RectRenderer, RectRendererFields> =
     }
 }
 
+// TODO : BoxCollider2D component
+
 export const BoxPrefab: GameObjectConfig = {
     name: "Box",
     transform: { position: { x: 0, y: 0, z: 0 } },
