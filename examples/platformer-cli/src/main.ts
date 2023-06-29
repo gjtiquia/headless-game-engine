@@ -1,4 +1,4 @@
-import { EngineClock } from "@headless-game-engine/clock";
+import { EngineClock, sleep } from "@headless-game-engine/clock";
 import { Vector2 } from "@headless-game-engine/core";
 
 import { gameEngine } from "./gameEngine.config.js";
@@ -10,9 +10,14 @@ const canvas = new Canvas({ size: SCREEN_SIZE, background: " " });
 
 export async function main() {
     EngineClock.start(gameEngine);
-    render();
 
-    process.exit();
+    while (true) {
+        render();
+        await sleep(15); // TODO : Refactor into Refresh Rate
+    }
+
+    // console.clear();
+    // process.exit();
 }
 
 const basePlatform = gameEngine.findGameObjectByName("Base Platform");

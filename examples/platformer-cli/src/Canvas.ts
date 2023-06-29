@@ -44,11 +44,11 @@ export class Canvas {
     }
 
     public drawRect(bottomLeftPosition: Vector2, size: Vector2, character: string = "x"): void {
-        const leftmost = bottomLeftPosition.x;
-        const rightmost = bottomLeftPosition.x + size.x;
+        const leftmost = Math.round(bottomLeftPosition.x);
+        const rightmost = Math.round(bottomLeftPosition.x + size.x);
 
-        const bottommost = bottomLeftPosition.y;
-        const topmost = bottomLeftPosition.y + size.y;
+        const bottommost = Math.round(bottomLeftPosition.y);
+        const topmost = Math.round(bottomLeftPosition.y + size.y);
 
         for (let x = leftmost; x < rightmost; x++) {
             for (let y = bottommost; y < topmost; y++) {
@@ -68,6 +68,12 @@ export class Canvas {
         if (flippedY < 0) return;
         if (flippedY >= this._size.y) return;
 
-        this._characterTable[this._size.y - y - 1][x] = character;
+        if (!this._characterTable[flippedY][x]) {
+            console.error(flippedY);
+            console.error(x);
+            console.error(this._characterTable);
+        }
+
+        this._characterTable[flippedY][x] = character;
     }
 }
