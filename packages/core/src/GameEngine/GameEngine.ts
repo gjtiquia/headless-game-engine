@@ -1,5 +1,6 @@
 import { Scene, SceneConfig } from "../Scene";
 import { GameObject } from "../GameObject";
+import { Component, ComponentConstructor, ComponentFields } from "../Component";
 
 interface GameEngineEssentialConfig {
     initialSceneConfig: SceneConfig
@@ -47,5 +48,9 @@ export class GameEngine {
 
     public findGameObjectByName(name: string): GameObject | undefined {
         return this._activeScene.findGameObjectByName(name);
+    }
+
+    public getComponents<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T[] {
+        return this._activeScene.getComponents(componentClass);
     }
 }

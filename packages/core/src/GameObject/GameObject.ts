@@ -54,6 +54,15 @@ export class GameObject {
         return component as T;
     }
 
+    public hasComponent<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): boolean {
+        const component = this.getComponent(componentClass);
+
+        if (!component)
+            return false
+
+        return true;
+    }
+
     // PRIVATE METHODS
     private createComponents(configs?: ComponentConfig<any, any>[]): Component[] {
         if (!configs)
