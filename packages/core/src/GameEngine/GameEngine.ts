@@ -27,7 +27,13 @@ export class GameEngine {
         this.initialize;
     }
 
-    public get tick() { return this._tick }
+    public get tick() {
+        return this._tick
+    }
+
+    public get activeScene() {
+        return this._activeScene
+    }
 
     public initialize(): void {
         this._tick = 0;

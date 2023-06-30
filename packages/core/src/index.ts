@@ -14,6 +14,13 @@ export {
 } from "./Scene"
 
 export {
+    SystemConfig,
+    SystemFields,
+    System,
+    SystemConstructor
+} from "./System"
+
+export {
     GameObjectConfig,
     GameObject,
 } from "./GameObject"
