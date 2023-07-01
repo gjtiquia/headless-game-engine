@@ -1,0 +1,56 @@
+import { Time } from "@headless-game-engine/clock";
+import { Component, ComponentFields, GameObject, Scene, Vector2 } from "@headless-game-engine/core";
+
+export interface Rigidbody2DFields extends ComponentFields {
+
+}
+
+export class Rigidbody2D extends Component {
+    private _cachedPositionBeforeIntegration: Vector2;
+    private _netAcceleration: Vector2;
+    private _velocity: Vector2;
+
+    constructor(gameObject: GameObject, fields: Rigidbody2DFields) {
+        super(gameObject, fields)
+
+        this._cachedPositionBeforeIntegration = { x: 0, y: 0 };
+        this._netAcceleration = { x: 0, y: 0 };
+        this._velocity = { x: 0, y: 0 };
+    }
+
+    public addForce(force: Vector2): void {
+        // F = ma, Assuming mass = 1 and force is applied over time
+
+        this._netAcceleration.x += force.x * Time.fixedDeltaTime;
+        this._netAcceleration.y += force.y * Time.fixedDeltaTime;
+    }
+
+    public setVelocity(velocity: Vector2): void {
+        this._velocity = { ...velocity };
+    }
+
+    public getVelocity(): Vector2 {
+        return { ...this._velocity };
+    }
+
+    public cachePositionBeforeIntegration(): void {
+        this._cachedPositionBeforeIntegration = { ...this.transform.position };
+    }
+
+    public getCachedPositionBeforeIntegration(): Vector2 {
+        return { ...this._cachedPositionBeforeIntegration }
+    }
+
+    public integrateMovement(): void {
+        this._velocity.x += this._netAcceleration.x;
+        this._velocity.y += this._netAcceleration.y;
+
+        const position = this.transform.position;
+
+        position.x += this._velocity.x * Time.fixedDeltaTime;
+        position.y += this._velocity.y * Time.fixedDeltaTime;
+
+        this.transform.position = position;
+        this._netAcceleration = { x: 0, y: 0 }; // Reset the acceleration
+    }
+}
