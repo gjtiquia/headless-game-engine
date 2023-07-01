@@ -1,4 +1,4 @@
-import { Component, ComponentConfig, GameEngine, GameObjectConfig, SceneConfig, System, SystemConfig } from "../../src";
+import { Component, ComponentConfig, ComponentFields, GameEngine, GameObjectConfig, Scene, SceneConfig, System, SystemConfig } from "../../src";
 
 class DummyComponent extends Component {
     private _sum: number = 0;
@@ -12,10 +12,18 @@ class DummyComponent extends Component {
     }
 }
 
-class NonExistentSystem extends System { }
+interface DummySystemFields extends ComponentFields {
+    baseNumber: number
+}
 
 class DummySystem extends System {
+    private _baseNumber: number;
     private _components: DummyComponent[] = [];
+
+    constructor(scene: Scene, fields: DummySystemFields) {
+        super(scene, fields);
+        this._baseNumber = fields.baseNumber;
+    }
 
     public override awake(): void {
         this._components = this._scene.getComponents(DummyComponent);
@@ -25,14 +33,10 @@ class DummySystem extends System {
         this._components.forEach(component => component.addOne());
     }
 
-    public getNumberOfComponents(): number {
-        return this._components.length;
-    }
-
     public getSum(): number {
         let sum = 0;
         this._components.forEach(component => sum += component.getSum());
-        return sum;
+        return this._baseNumber + sum;
     }
 }
 
@@ -46,8 +50,11 @@ const dummyPrefab: GameObjectConfig = {
     components: [dummyComponent]
 }
 
-const dummySystem: SystemConfig<DummySystem> = {
-    system: DummySystem
+const dummySystem: SystemConfig<DummySystem, DummySystemFields> = {
+    system: DummySystem,
+    systemFields: {
+        baseNumber: 5
+    }
 }
 
 const scene: SceneConfig = {
@@ -59,31 +66,12 @@ const scene: SceneConfig = {
     ]
 }
 
-describe("System with no fields", () => {
+describe("System with fields", () => {
     let gameEngine: GameEngine;
 
     beforeEach(() => {
         gameEngine = new GameEngine({ initialSceneConfig: scene })
     })
-
-    it("should be able to get the system", () => {
-        const system = gameEngine.activeScene.getSystem(DummySystem);
-        expect(system).toBeDefined();
-    });
-
-    it("should return undefined for a system that does not exist", () => {
-        const system = gameEngine.activeScene.getSystem(NonExistentSystem);
-        expect(system).toBeUndefined();
-    });
-
-    it("should be able to get two components", () => {
-        const system = gameEngine.activeScene.getSystem(DummySystem);
-
-        gameEngine.awake();
-
-        const numberOfComponents = system?.getNumberOfComponents();
-        expect(numberOfComponents).toBe(2);
-    });
 
     it("should be able to operate on the two components", () => {
         const system = gameEngine.activeScene.getSystem(DummySystem);
@@ -93,6 +81,6 @@ describe("System with no fields", () => {
         gameEngine.fixedUpdate();
 
         const sum = system?.getSum();
-        expect(sum).toBe(4);
+        expect(sum).toBe(9);
     });
 })
