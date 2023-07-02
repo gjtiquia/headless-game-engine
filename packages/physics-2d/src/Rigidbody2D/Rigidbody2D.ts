@@ -74,10 +74,15 @@ export class Rigidbody2D extends Component {
     }
 
     public checkIfAABBHasContinousCollisionWithStaticAABB(thisCollider: BoxCollider2D, staticCollider: BoxCollider2D): boolean {
-        // TODO
+        // References:
+        // https://noonat.github.io/intersect/#aabb-vs-swept-aabb
+        // https://www.emanueleferonato.com/2021/10/21/understanding-physics-continuous-collision-detection-using-swept-aabb-method-and-minkowski-sum/
 
-        //! temp
-        return false;
+        const cachedPosition = this.getCachedPositionBeforeIntegration();
+        const currentPosition = this.transform.position;
+        const padding = { x: thisCollider.half.x, y: thisCollider.half.y };
+
+        return staticCollider.isIntersectingWithLineSegment(cachedPosition, currentPosition, padding)
     }
 
     public resolveCollisionWithStaticCollider(rigidbodyCollider: Collider2D, staticCollider: Collider2D): void {

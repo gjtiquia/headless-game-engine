@@ -1,7 +1,7 @@
 import { GameObject, GameObjectConfig, Scene, SceneConfig } from "@headless-game-engine/core"
-import { Rigidbody2D, Rigidbody2DConfig } from "../../Rigidbody2D"
-import { PhysicsSystem2D, PhysicsSystem2DConfig } from ".."
 import { Time } from "@headless-game-engine/clock"
+import { Rigidbody2D, Rigidbody2DConfig } from "../../Rigidbody2D"
+import { PhysicsSystem2D, PhysicsSystem2DConfig } from "../PhysicsSystem2D"
 import { BoxCollider2DConfig } from "../../BoxCollider2D"
 
 const rigidbodyComponent = new Rigidbody2DConfig({})
@@ -59,12 +59,19 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(movingGameObject.transform.position).toStrictEqual({ x: 4, y: 4, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(1);
 
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: 0, y: 0, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(1);
 
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -4, y: -4, z: 0 });
+        expect(physicsSystem.getCollisionCount()).toBe(1);
+
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
+        scene.fixedUpdate();
+        expect(movingGameObject.transform.position).toStrictEqual({ x: -8, y: -8, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(0);
     })
 
@@ -81,16 +88,17 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(movingGameObject.transform.position).toStrictEqual({ x: 10, y: 10, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(0);
 
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -10, y: -10, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(1);
 
-        // TODO : Position is actually wrong cuz of collision resolution
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -30, y: -30, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(0);
 
-        // TODO : Position is actually wrong cuz of collision resolution
+        // TODO : Position is actually wrong cuz of collision resolution, but correct if dont have collision resolution
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -50, y: -50, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(0);

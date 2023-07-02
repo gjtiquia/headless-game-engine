@@ -1,4 +1,4 @@
-import { Component } from "@headless-game-engine/core";
+import { Component, Vector2 } from "@headless-game-engine/core";
 import { Rigidbody2D } from "..";
 
 export abstract class Collider2D extends Component {
@@ -8,6 +8,7 @@ export abstract class Collider2D extends Component {
         this._rigidbody = this.getComponent(Rigidbody2D);
     }
 
+    public abstract isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2): boolean;
     public abstract isIntersectingWith(collider: Collider2D): boolean;
 
     public hasRigidbody(): boolean {

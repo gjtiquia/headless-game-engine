@@ -29,6 +29,45 @@ export class BoxCollider2D extends Collider2D {
         this._offset = fields.offset ?? DEFAULT_OFFSET;
     }
 
+    public get size(): Vector2 {
+        return this._size;
+    }
+
+    public get half(): Vector2 {
+        return { x: (this._size.x / 2), y: (this._size.y / 2) }
+    }
+
+    public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
+        // References
+        // https://noonat.github.io/intersect/#aabb-vs-segment
+
+        const paddingX = padding ? padding.x : 0;
+        const paddingY = padding ? padding.y : 0;
+
+        const scaleX = 1.0 / pointB.x;
+        const scaleY = 1.0 / pointB.y;
+
+        const signX = sign(scaleX);
+        const signY = sign(scaleY);
+
+        const nearTimeX = (this.pos.x - signX * (this.half.x + paddingX) - pointA.x) * scaleX;
+        const nearTimeY = (this.pos.y - signY * (this.half.y + paddingY) - pointA.y) * scaleY;
+
+        const farTimeX = (this.pos.x + signX * (this.half.x + paddingX) - pointA.x) * scaleX;
+        const farTimeY = (this.pos.y + signY * (this.half.y + paddingY) - pointA.y) * scaleY;
+
+        if (nearTimeX > farTimeY || nearTimeY > farTimeX)
+            return false;
+
+        const nearTime = nearTimeX > nearTimeY ? nearTimeX : nearTimeY;
+        const farTime = farTimeX < farTimeY ? farTimeX : farTimeY;
+
+        if (nearTime >= 1 || farTime <= 0)
+            return false;
+
+        return true;
+    }
+
     public override isIntersectingWith(collider: Collider2D): boolean {
         if (collider instanceof BoxCollider2D) {
             return this.isIntersectingWithBoxCollider(collider);
@@ -49,6 +88,10 @@ export class BoxCollider2D extends Collider2D {
         );
     }
 
+    private get pos(): Vector2 {
+        return this.transform.position;
+    }
+
     private get minX() {
         return this.transform.position.x - (this._size.x / 2) + this._offset.x
     }
@@ -64,4 +107,9 @@ export class BoxCollider2D extends Collider2D {
     private get maxY() {
         return this.transform.position.y + (this._size.y / 2) + this._offset.y
     }
+}
+
+// TODO : Put this in headless-game-engine core
+function sign(value: number): number {
+    return value < 0 ? -1 : 1;
 }

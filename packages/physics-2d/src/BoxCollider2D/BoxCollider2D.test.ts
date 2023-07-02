@@ -104,6 +104,10 @@ const boxPrefabWithOffset: GameObjectConfig = {
 }
 
 class DummyCollider extends Collider2D {
+    public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2): boolean {
+        return false;
+    }
+
     public override isIntersectingWith(collider: Collider2D): boolean {
         return false;
     }
