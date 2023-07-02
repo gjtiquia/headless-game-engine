@@ -33,19 +33,42 @@ export class BoxCollider2D extends Collider2D {
         return this._size;
     }
 
+    public get pos(): Vector2 {
+        return this.transform.position;
+    }
+
     public get half(): Vector2 {
         return { x: (this._size.x / 2), y: (this._size.y / 2) }
     }
 
     public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
+        const { isIntersecting } = this.intersectLineSegment(pointA, pointB, padding);
+        return isIntersecting;
+    }
+
+    public override isIntersectingWith(collider: Collider2D): boolean {
+        if (collider instanceof BoxCollider2D) {
+            return this.isIntersectingWithBoxCollider(collider);
+        }
+
+        throw new Error(`Did not implement intersection logic with ${typeof collider}!`)
+    }
+
+    public intersectLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2) {
         // References
         // https://noonat.github.io/intersect/#aabb-vs-segment
+
+        let isIntersecting: boolean = false;
+        let hitTime: number = 0;
+        let hitPos: Vector2 = { x: 0, y: 0 }
+
+        const delta: Vector2 = { x: pointB.x - pointA.x, y: pointB.y - pointA.y }
 
         const paddingX = padding ? padding.x : 0;
         const paddingY = padding ? padding.y : 0;
 
-        const scaleX = 1.0 / pointB.x;
-        const scaleY = 1.0 / pointB.y;
+        const scaleX = 1.0 / delta.x;
+        const scaleY = 1.0 / delta.y;
 
         const signX = sign(scaleX);
         const signY = sign(scaleY);
@@ -57,23 +80,21 @@ export class BoxCollider2D extends Collider2D {
         const farTimeY = (this.pos.y + signY * (this.half.y + paddingY) - pointA.y) * scaleY;
 
         if (nearTimeX > farTimeY || nearTimeY > farTimeX)
-            return false;
+            return { isIntersecting, hitTime, hitPos };
 
         const nearTime = nearTimeX > nearTimeY ? nearTimeX : nearTimeY;
         const farTime = farTimeX < farTimeY ? farTimeX : farTimeY;
 
         if (nearTime >= 1 || farTime <= 0)
-            return false;
+            return { isIntersecting, hitTime, hitPos };
 
-        return true;
-    }
+        isIntersecting = true;
 
-    public override isIntersectingWith(collider: Collider2D): boolean {
-        if (collider instanceof BoxCollider2D) {
-            return this.isIntersectingWithBoxCollider(collider);
-        }
+        hitTime = clamp(nearTime, 0, 1);
+        hitPos.x = pointA.x + delta.x * hitTime;
+        hitPos.y = pointA.y + delta.y * hitTime;
 
-        throw new Error(`Did not implement intersection logic with ${typeof collider}!`)
+        return { isIntersecting, hitTime, hitPos };;
     }
 
     private isIntersectingWithBoxCollider(boxCollider: BoxCollider2D): boolean {
@@ -86,10 +107,6 @@ export class BoxCollider2D extends Collider2D {
             this.minY <= boxCollider.maxY &&
             this.maxY >= boxCollider.minY
         );
-    }
-
-    private get pos(): Vector2 {
-        return this.transform.position;
     }
 
     private get minX() {
@@ -112,4 +129,14 @@ export class BoxCollider2D extends Collider2D {
 // TODO : Put this in headless-game-engine core
 function sign(value: number): number {
     return value < 0 ? -1 : 1;
+}
+
+function clamp(value: number, min: number, max: number): number {
+    if (value < min) {
+        return min;
+    } else if (value > max) {
+        return max;
+    } else {
+        return value;
+    }
 }
