@@ -1,6 +1,8 @@
 import { GameObject } from "../GameObject"
 export { GameObject } from "../GameObject" // For Transform to use
 
+export type AbstractComponentConstructor<T extends Component, F extends ComponentFields> = abstract new (gameObject: GameObject, fields: F) => T;
+
 export type ComponentConstructor<T extends Component, F extends ComponentFields> = new (gameObject: GameObject, fields: F) => T;
 
 export interface ComponentConfig<T extends Component, F extends ComponentFields = ComponentFields> {

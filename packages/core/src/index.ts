@@ -29,6 +29,7 @@ export {
     ComponentConfig,
     ComponentFields,
     Component,
+    AbstractComponentConstructor,
     ComponentConstructor,
 
     TransformFields,

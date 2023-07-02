@@ -2,6 +2,7 @@ export {
     ComponentConfig,
     ComponentFields,
     Component,
+    AbstractComponentConstructor,
     ComponentConstructor
 } from "./Component"
 
