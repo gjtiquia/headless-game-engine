@@ -10,6 +10,13 @@ describe("BoxCollider2D", () => {
         expect(boxColliderA.isIntersectingWith(boxColliderB)).toBeTruthy();
     })
 
+    it("should be able to detect two boxes using the parent abstract Collider2D", () => {
+        const scene: SceneConfig = givenSceneWithTwoBoxes({ x: 5, y: 5 }, { x: 10, y: 10 });
+        const { colliderA, colliderB } = getColliders(scene)
+
+        expect(colliderA.isIntersectingWith(colliderB)).toBeTruthy();
+    })
+
     it("should be able to detect two boxes that are colliding when the edges are touching horizontally side-by-side", () => {
         const scene: SceneConfig = givenSceneWithTwoBoxes({ x: 0, y: 0 }, { x: 20, y: 0 });
         const { boxColliderA, boxColliderB } = getBoxColliders(scene)
@@ -158,6 +165,24 @@ function getBoxColliders(scene: SceneConfig) {
         throw new Error("box B does not have BoxCollider2D component!")
 
     return { boxColliderA, boxColliderB }
+}
+
+function getColliders(scene: SceneConfig) {
+    const gameEngine = new GameEngine({ initialSceneConfig: scene })
+
+    const boxA = gameEngine.findGameObjectByName("Box 1")
+    const colliderA = boxA?.getAbstractComponent(Collider2D)
+
+    if (!colliderA)
+        throw new Error("box A does not have Collider2D component!")
+
+    const boxB = gameEngine.findGameObjectByName("Box 2")
+    const colliderB = boxB?.getAbstractComponent(Collider2D)
+
+    if (!colliderB)
+        throw new Error("box B does not have Collider2D component!")
+
+    return { colliderA, colliderB }
 }
 
 
