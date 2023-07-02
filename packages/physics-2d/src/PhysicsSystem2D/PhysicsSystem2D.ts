@@ -3,7 +3,7 @@ import { Collider2D, Rigidbody2D } from "..";
 
 export class PhysicsSystem2DConfig implements SystemConfig<PhysicsSystem2D, PhysicsSystem2DFields> {
     system: SystemConstructor<PhysicsSystem2D, PhysicsSystem2DFields>;
-    systemFields?: PhysicsSystem2DFields | undefined;
+    systemFields: PhysicsSystem2DFields;
 
     constructor(fields: PhysicsSystem2DFields) {
         this.system = PhysicsSystem2D;

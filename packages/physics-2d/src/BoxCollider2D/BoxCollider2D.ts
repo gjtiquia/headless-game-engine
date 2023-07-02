@@ -5,7 +5,7 @@ const DEFAULT_OFFSET: Vector2 = { x: 0, y: 0 }
 
 export class BoxCollider2DConfig implements ComponentConfig<BoxCollider2D, BoxCollider2DFields> {
     component: ComponentConstructor<BoxCollider2D, BoxCollider2DFields>;
-    componentFields?: BoxCollider2DFields | undefined;
+    componentFields: BoxCollider2DFields;
 
     constructor(fields: BoxCollider2DFields) {
         this.component = BoxCollider2D;

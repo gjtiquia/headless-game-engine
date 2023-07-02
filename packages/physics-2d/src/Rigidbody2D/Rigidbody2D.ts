@@ -3,7 +3,7 @@ import { Component, ComponentConfig, ComponentConstructor, ComponentFields, Game
 
 export class Rigidbody2DConfig implements ComponentConfig<Rigidbody2D, Rigidbody2DFields> {
     component: ComponentConstructor<Rigidbody2D, Rigidbody2DFields>;
-    componentFields?: Rigidbody2DFields | undefined;
+    componentFields: Rigidbody2DFields;
 
     constructor(fields: Rigidbody2DFields) {
         this.component = Rigidbody2D;
