@@ -24,6 +24,10 @@ export abstract class Component {
 
     public get transform() { return this._gameObject.transform }
 
+    public getComponent<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T | undefined {
+        return this._gameObject.getComponent(componentClass)
+    }
+
     public awake(): void { }
     public earlyUpdate(): void { }
     public fixedUpdate(): void { }
