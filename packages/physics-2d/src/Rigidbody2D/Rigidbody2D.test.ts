@@ -1,14 +1,9 @@
-import { ComponentConfig, GameObject, GameObjectConfig, Scene, SceneConfig, SystemConfig } from "@headless-game-engine/core"
-import { Rigidbody2D, Rigidbody2DFields } from "."
-import { PhysicsSystem2D, PhysicsSystem2DFields } from ".."
+import { GameObject, GameObjectConfig, Scene, SceneConfig } from "@headless-game-engine/core"
+import { Rigidbody2D, Rigidbody2DConfig } from "."
+import { PhysicsSystem2DConfig } from ".."
 import { Time } from "@headless-game-engine/clock"
 
-const rigidbodyComponent: ComponentConfig<Rigidbody2D, Rigidbody2DFields> = {
-    component: Rigidbody2D,
-    componentFields: {
-
-    }
-}
+const rigidbodyComponent = new Rigidbody2DConfig({})
 
 const dummyPrefab: GameObjectConfig = {
     name: "Dummy",
@@ -16,12 +11,7 @@ const dummyPrefab: GameObjectConfig = {
     components: [rigidbodyComponent]
 }
 
-const physicsSystem: SystemConfig<PhysicsSystem2D, PhysicsSystem2DFields> = {
-    system: PhysicsSystem2D,
-    systemFields: {
-
-    }
-}
+const physicsSystem = new PhysicsSystem2DConfig({})
 
 const sceneConfig: SceneConfig = {
     gameObjects: [dummyPrefab],
@@ -38,15 +28,8 @@ describe("Rigidbody2D", () => {
 
         scene = new Scene(sceneConfig);
 
-        const dummy = scene.findGameObjectByName("Dummy");
-        if (dummy === undefined)
-            throw new Error("Cannot find game object named Dummy!");
-        dummyGameObject = dummy;
-
-        const rigidbody = dummy.getComponent(Rigidbody2D);
-        if (rigidbody === undefined)
-            throw new Error("Cannot find Rigidbody2D component!");
-        dummyRigidbody = rigidbody;
+        dummyGameObject = scene.findGameObjectByName("Dummy")!;
+        dummyRigidbody = dummyGameObject.getComponent(Rigidbody2D)!;
 
         scene.awake();
     })

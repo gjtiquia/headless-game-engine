@@ -1,5 +1,15 @@
 import { Time } from "@headless-game-engine/clock";
-import { Component, ComponentFields, GameObject, Scene, Vector2 } from "@headless-game-engine/core";
+import { Component, ComponentConfig, ComponentConstructor, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
+
+export class Rigidbody2DConfig implements ComponentConfig<Rigidbody2D, Rigidbody2DFields> {
+    component: ComponentConstructor<Rigidbody2D, Rigidbody2DFields>;
+    componentFields?: Rigidbody2DFields | undefined;
+
+    constructor(fields: Rigidbody2DFields) {
+        this.component = Rigidbody2D;
+        this.componentFields = fields;
+    }
+}
 
 export interface Rigidbody2DFields extends ComponentFields {
 

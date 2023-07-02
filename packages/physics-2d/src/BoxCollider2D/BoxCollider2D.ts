@@ -1,7 +1,17 @@
-import { Component, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
+import { ComponentConfig, ComponentConstructor, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
 import { Collider2D } from "../Collider2D";
 
 const DEFAULT_OFFSET: Vector2 = { x: 0, y: 0 }
+
+export class BoxCollider2DConfig implements ComponentConfig<BoxCollider2D, BoxCollider2DFields> {
+    component: ComponentConstructor<BoxCollider2D, BoxCollider2DFields>;
+    componentFields?: BoxCollider2DFields | undefined;
+
+    constructor(fields: BoxCollider2DFields) {
+        this.component = BoxCollider2D;
+        this.componentFields = fields;
+    }
+}
 
 export interface BoxCollider2DFields extends ComponentFields {
     size: Vector2,

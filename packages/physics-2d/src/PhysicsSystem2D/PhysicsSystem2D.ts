@@ -58,6 +58,8 @@ export class PhysicsSystem2D extends System {
                 const colliderA = this._colliders[i];
                 const colliderB = this._colliders[j];
 
+                // TODO : Ignore if both colliders are static
+
                 if (!colliderA.isIntersectingWith(colliderB)) continue;
 
                 if (!this._collisions.has(colliderA))

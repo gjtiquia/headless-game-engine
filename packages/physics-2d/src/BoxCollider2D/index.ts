@@ -1,1 +1,5 @@
-export { BoxCollider2D, BoxCollider2DFields } from "./BoxCollider2D"
+export {
+    BoxCollider2D,
+    BoxCollider2DFields,
+    BoxCollider2DConfig
+} from "./BoxCollider2D"

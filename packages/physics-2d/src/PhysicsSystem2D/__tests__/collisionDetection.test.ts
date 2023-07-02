@@ -1,13 +1,8 @@
-import { ComponentConfig, GameObject, GameObjectConfig, Scene, SceneConfig } from "@headless-game-engine/core"
+import { GameObject, GameObjectConfig, Scene, SceneConfig } from "@headless-game-engine/core"
 import { PhysicsSystem2D, PhysicsSystem2DConfig } from "../PhysicsSystem2D";
-import { BoxCollider2D, BoxCollider2DFields } from "../../BoxCollider2D";
+import { BoxCollider2DConfig } from "../../BoxCollider2D";
 
-const boxColliderComponent: ComponentConfig<BoxCollider2D, BoxCollider2DFields> = {
-    component: BoxCollider2D,
-    componentFields: {
-        size: { x: 4, y: 4 }
-    }
-}
+const boxColliderComponent = new BoxCollider2DConfig({ size: { x: 4, y: 4 } })
 
 const dummyPrefab: GameObjectConfig = {
     name: "Dummy",

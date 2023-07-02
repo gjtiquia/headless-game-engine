@@ -1,5 +1,5 @@
-import { ComponentConfig, GameEngine, GameObjectConfig, SceneConfig, Vector2 } from "@headless-game-engine/core"
-import { BoxCollider2D, BoxCollider2DFields } from "./BoxCollider2D"
+import { GameEngine, GameObjectConfig, SceneConfig, Vector2 } from "@headless-game-engine/core"
+import { BoxCollider2D, BoxCollider2DConfig } from "./BoxCollider2D"
 import { Collider2D } from "..";
 
 describe("BoxCollider2D", () => {
@@ -82,12 +82,9 @@ describe("BoxCollider2D", () => {
     })
 })
 
-const boxColllider2DComponent: ComponentConfig<BoxCollider2D, BoxCollider2DFields> = {
-    component: BoxCollider2D,
-    componentFields: {
-        size: { x: 20, y: 10 }
-    }
-}
+const boxColllider2DComponent = new BoxCollider2DConfig({
+    size: { x: 20, y: 10 }
+})
 
 const boxPrefab: GameObjectConfig = {
     name: "Box",
@@ -95,13 +92,10 @@ const boxPrefab: GameObjectConfig = {
     components: [boxColllider2DComponent]
 }
 
-const boxColllider2DComponentWithOffset: ComponentConfig<BoxCollider2D, BoxCollider2DFields> = {
-    component: BoxCollider2D,
-    componentFields: {
-        size: { x: 20, y: 10 },
-        offset: { x: 1, y: 1 }
-    }
-}
+const boxColllider2DComponentWithOffset = new BoxCollider2DConfig({
+    size: { x: 20, y: 10 },
+    offset: { x: 1, y: 1 }
+})
 
 const boxPrefabWithOffset: GameObjectConfig = {
     name: "Box",
