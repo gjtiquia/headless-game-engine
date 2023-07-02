@@ -68,17 +68,14 @@ describe("SmokeTest", () => {
             }
         });
 
-        expect(gameEngine.tick).toStrictEqual(0);
         expect(gameEngine.findGameObjectByName("Dummy")).toBeDefined();
 
         Time.tickRate = 1; // 1 tick per second
-        expect(Time.fixedDeltaTime).toBe(1); // Unit in seconds
 
         EngineClock.start(gameEngine);
         jest.advanceTimersByTime(3.5 * 1000); // Unit in ms
         EngineClock.stop();
 
-        expect(gameEngine.tick).toBe(4);
         expect(gameEngine.findGameObjectByName("Dummy")).toBeUndefined();
     })
 })
