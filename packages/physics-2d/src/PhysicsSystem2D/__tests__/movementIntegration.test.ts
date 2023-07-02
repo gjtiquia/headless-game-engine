@@ -1,6 +1,6 @@
 import { GameObject, GameObjectConfig, Scene, SceneConfig } from "@headless-game-engine/core"
-import { Rigidbody2D, Rigidbody2DConfig } from "."
-import { PhysicsSystem2DConfig } from ".."
+import { Rigidbody2D, Rigidbody2DConfig } from "../../Rigidbody2D"
+import { PhysicsSystem2DConfig } from "../.."
 import { Time } from "@headless-game-engine/clock"
 
 const rigidbodyComponent = new Rigidbody2DConfig({})
@@ -18,7 +18,7 @@ const sceneConfig: SceneConfig = {
     systems: [physicsSystem]
 }
 
-describe("Rigidbody2D", () => {
+describe("PhysicsSystem2D: Movement Integration", () => {
     let scene: Scene;
     let dummyGameObject: GameObject;
     let dummyRigidbody: Rigidbody2D;

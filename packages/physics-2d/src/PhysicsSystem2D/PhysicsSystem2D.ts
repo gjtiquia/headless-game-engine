@@ -57,9 +57,7 @@ export class PhysicsSystem2D extends System {
                 const colliderA = this._colliders[i];
                 const colliderB = this._colliders[j];
 
-                // TODO : Ignore if both colliders are static
-
-                if (colliderA.isIntersectingWith(colliderB))
+                if (Collider2D.hasCollision(colliderA, colliderB))
                     this.addToCollisions(colliderA, colliderB)
             }
         }
@@ -81,23 +79,20 @@ export class PhysicsSystem2D extends System {
     private collisionResolution(): void {
         this._collisions.forEach((colliders, colliderA) => {
             colliders.forEach(colliderB => {
+                if (!Collider2D.hasCollision(colliderA, colliderB))
+                    return;
+
                 const colliderAHasRigidbody = colliderA.hasRigidbody();
                 const colliderBHasRigidbody = colliderB.hasRigidbody();
-
-                if (!colliderAHasRigidbody && !colliderBHasRigidbody)
-                    return;
 
                 if (colliderAHasRigidbody && colliderBHasRigidbody)
                     throw new Error("Both colliders have rigidbodies! Unsure how to proceed!")
 
-                if (!colliderA.isIntersectingWith(colliderB))
-                    return;
-
                 if (colliderAHasRigidbody && !colliderBHasRigidbody)
-                    colliderA.getRigidbody()?.resolveCollision(colliderA, colliderB);
+                    colliderA.getRigidbody()?.resolveCollisionWithStaticCollider(colliderA, colliderB);
 
                 if (colliderBHasRigidbody && !colliderAHasRigidbody)
-                    colliderB.getRigidbody()?.resolveCollision(colliderB, colliderA);
+                    colliderB.getRigidbody()?.resolveCollisionWithStaticCollider(colliderB, colliderA);
             })
         })
     }

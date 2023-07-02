@@ -66,14 +66,28 @@ export class Rigidbody2D extends Component {
         this._netAcceleration = { x: 0, y: 0 }; // Reset the acceleration
     }
 
-    public resolveCollision(thisCollider: Collider2D, otherCollider: Collider2D) {
-        if (thisCollider instanceof BoxCollider2D && otherCollider instanceof BoxCollider2D)
-            this.resolveAABBCollisionWithAABB(thisCollider, otherCollider);
-        else
-            throw new Error(`Did not implement resolution logic between ${typeof thisCollider} and ${typeof otherCollider}!`)
+    public hasContinuousCollisionWithStaticCollider(rigidbodyCollider: Collider2D, staticCollider: Collider2D): boolean {
+        if (rigidbodyCollider instanceof BoxCollider2D && staticCollider instanceof BoxCollider2D)
+            return this.checkIfAABBHasContinousCollisionWithStaticAABB(rigidbodyCollider, staticCollider);
+
+        throw new Error(`Did not implement continous collision detection logic between rigidbody ${typeof rigidbodyCollider} and static ${typeof staticCollider}!`)
     }
 
-    private resolveAABBCollisionWithAABB(thisCollider: BoxCollider2D, otherCollider: BoxCollider2D) {
+    public checkIfAABBHasContinousCollisionWithStaticAABB(thisCollider: BoxCollider2D, staticCollider: BoxCollider2D): boolean {
+        // TODO
+
+        //! temp
+        return false;
+    }
+
+    public resolveCollisionWithStaticCollider(rigidbodyCollider: Collider2D, staticCollider: Collider2D): void {
+        if (rigidbodyCollider instanceof BoxCollider2D && staticCollider instanceof BoxCollider2D)
+            this.resolveAABBCollisionWithStaticAABB(rigidbodyCollider, staticCollider);
+        else
+            throw new Error(`Did not implement resolution logic between ${typeof rigidbodyCollider} and ${typeof staticCollider}!`)
+    }
+
+    private resolveAABBCollisionWithStaticAABB(rigidbodyCollider: BoxCollider2D, staticCollider: BoxCollider2D): void {
         // TODO : Resolve while making use of rigidbody's cached position, velocity etc.
     }
 }
