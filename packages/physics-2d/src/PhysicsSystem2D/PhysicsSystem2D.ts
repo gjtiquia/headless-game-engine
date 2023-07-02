@@ -20,6 +20,7 @@ export class PhysicsSystem2D extends System {
     private _colliders: Collider2D[];
     private _collisions: Map<Collider2D, Collider2D[]>;
     private _collisionCount: number;
+    private _enableCollisionResolution: boolean;
 
     constructor(scene: Scene, fields: PhysicsSystem2DFields) {
         super(scene, fields);
@@ -28,16 +29,23 @@ export class PhysicsSystem2D extends System {
         this._colliders = scene.getAbstractComponents(Collider2D);
         this._collisions = new Map<Collider2D, Collider2D[]>();
         this._collisionCount = 0;
+        this._enableCollisionResolution = true;
     }
 
     public getCollisionCount(): number {
         return this._collisionCount;
     }
 
+    public toggleCollisionResolution(isEnabled: boolean): void {
+        this._enableCollisionResolution = isEnabled;
+    }
+
     public override fixedUpdate(): void {
         this.movementIntegration();
         this.collisionDetection();
-        this.collisionResolution();
+
+        if (this._enableCollisionResolution)
+            this.collisionResolution();
     }
 
     private movementIntegration(): void {

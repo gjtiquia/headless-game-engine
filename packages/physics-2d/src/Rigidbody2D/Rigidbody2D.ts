@@ -94,5 +94,7 @@ export class Rigidbody2D extends Component {
 
     private resolveAABBCollisionWithStaticAABB(rigidbodyCollider: BoxCollider2D, staticCollider: BoxCollider2D): void {
         // TODO : Resolve while making use of rigidbody's cached position, velocity etc.
+
+        throw new Error("No resolution logic implemented yet!")
     }
 }
