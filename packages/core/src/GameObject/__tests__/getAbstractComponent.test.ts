@@ -23,7 +23,7 @@ const dummyPrefab: GameObjectConfig = {
     components: [dummyComponent]
 }
 
-describe("Get abstract component", () => {
+describe("GameObject.getAbstractComponent", () => {
     let gameObject: GameObject;
 
     beforeEach(() => {
