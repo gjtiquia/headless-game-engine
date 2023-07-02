@@ -48,8 +48,7 @@ export class PhysicsSystem2D extends System {
     }
 
     private collisionDetection(): void {
-        this._collisions.clear();
-        this._collisionCount = 0;
+        this.clearCollisions();
 
         // Narrow phase detection. Inefficient but can do the broad phase detection for optimization later.
         for (let i = 0; i < this._colliders.length; i++) {
@@ -60,18 +59,46 @@ export class PhysicsSystem2D extends System {
 
                 // TODO : Ignore if both colliders are static
 
-                if (!colliderA.isIntersectingWith(colliderB)) continue;
-
-                if (!this._collisions.has(colliderA))
-                    this._collisions.set(colliderA, []);
-
-                this._collisions.get(colliderA)?.push(colliderB);
-                this._collisionCount++;
+                if (colliderA.isIntersectingWith(colliderB))
+                    this.addToCollisions(colliderA, colliderB)
             }
         }
     }
 
+    private clearCollisions(): void {
+        this._collisions.clear();
+        this._collisionCount = 0;
+    }
+
+    private addToCollisions(colliderA: Collider2D, colliderB: Collider2D): void {
+        if (!this._collisions.has(colliderA))
+            this._collisions.set(colliderA, []);
+
+        this._collisions.get(colliderA)?.push(colliderB);
+        this._collisionCount++;
+    }
+
     private collisionResolution(): void {
-        // TODO
+        this._collisions.forEach((colliders, colliderA) => {
+            colliders.forEach(colliderB => {
+                const colliderAHasRigidbody = colliderA.hasRigidbody();
+                const colliderBHasRigidbody = colliderB.hasRigidbody();
+
+                if (!colliderAHasRigidbody && !colliderBHasRigidbody)
+                    return;
+
+                if (colliderAHasRigidbody && colliderBHasRigidbody)
+                    throw new Error("Both colliders have rigidbodies! Unsure how to proceed!")
+
+                if (!colliderA.isIntersectingWith(colliderB))
+                    return;
+
+                if (colliderAHasRigidbody && !colliderBHasRigidbody)
+                    colliderA.getRigidbody()?.resolveCollision(colliderA, colliderB);
+
+                if (colliderBHasRigidbody && !colliderAHasRigidbody)
+                    colliderB.getRigidbody()?.resolveCollision(colliderB, colliderA);
+            })
+        })
     }
 }
