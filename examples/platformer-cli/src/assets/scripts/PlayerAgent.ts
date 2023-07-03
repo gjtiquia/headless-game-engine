@@ -42,10 +42,10 @@ export class PlayerAgent extends Component {
         if (this._movement === Movement.Stop)
             currentVelocity.x = 0;
 
-        // if (this._isJumping) {
-        //     currentVelocity.y = JUMP_VELOCITY;
-        //     this._isJumping = false;
-        // }
+        if (this._isJumping) {
+            currentVelocity.y = JUMP_VELOCITY;
+            this._isJumping = false;
+        }
 
         if (Math.abs(currentVelocity.x) > MAX_MOVE_VELOCITY)
             currentVelocity.x = sign(currentVelocity.x) * MAX_MOVE_VELOCITY;
