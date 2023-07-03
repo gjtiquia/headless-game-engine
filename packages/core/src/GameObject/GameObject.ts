@@ -1,4 +1,4 @@
-import { Component, ComponentConfig, ComponentConstructor, ComponentFields, Transform, TransformFields } from "../Component";
+import { AbstractComponentConstructor, Component, ComponentConfig, ComponentConstructor, ComponentFields, Transform, TransformFields } from "../Component";
 
 export interface GameObjectConfig {
     // Required
@@ -47,6 +47,15 @@ export class GameObject {
     // PUBLIC METHODS
     public getComponent<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T | undefined {
         const component = this._components.find(component => component instanceof componentClass);
+
+        if (!component)
+            return undefined
+
+        return component as T;
+    }
+
+    public getAbstractComponent<T extends Component, F extends ComponentFields>(abstractComponentClass: AbstractComponentConstructor<T, F>): T | undefined {
+        const component = this._components.find(component => component instanceof abstractComponentClass);
 
         if (!component)
             return undefined

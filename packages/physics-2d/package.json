@@ -38,6 +38,7 @@
     },
     "homepage": "https://github.com/gjtiquia/headless-game-engine#readme",
     "dependencies": {
-        "@headless-game-engine/core": "*"
+        "@headless-game-engine/core": "*",
+        "@headless-game-engine/clock": "*"
     }
 }

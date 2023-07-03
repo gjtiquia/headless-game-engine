@@ -1,6 +1,5 @@
-import { Time } from "@headless-game-engine/clock";
-import { Component, Vector2 } from "@headless-game-engine/core";
-import { Physics2D } from "../../Physics2D.js";
+import { Component, sign } from "@headless-game-engine/core";
+import { Rigidbody2D } from "@headless-game-engine/physics-2d";
 
 const GRAVITY = -80;
 const GRAVITY_MULTIPLIER = 2.5;
@@ -11,59 +10,70 @@ const MAX_FALL_VELOCITY = -30;
 const MOVE_ACCELERATION = 100;
 const MAX_MOVE_VELOCITY = 40;
 
+enum Movement {
+    Left,
+    Right,
+    Stop
+}
+
 export class PlayerAgent extends Component {
-    private _acceleration: Vector2 = { x: 0, y: GRAVITY };
-    private _velocity: Vector2 = { x: 0, y: 0 };
+    private _rigidbody?: Rigidbody2D;
+    private _movement: Movement = Movement.Stop;
+    private _isJumping: boolean = false;
 
-    public override fixedUpdate(): void {
-        // return;
-
-        const previousPosition = this.transform.position;
-        const currentPosition = { ...previousPosition };
-
-        if (this._velocity.y <= 0)
-            this._acceleration.y = GRAVITY_MULTIPLIER * GRAVITY;
-        else
-            this._acceleration.y = GRAVITY;
-
-        this._velocity.x += this._acceleration.x * Time.fixedDeltaTime;
-        this._velocity.y += this._acceleration.y * Time.fixedDeltaTime;
-
-        if (Math.abs(this._velocity.x) > MAX_MOVE_VELOCITY)
-            this._velocity.x = (this._velocity.x / Math.abs(this._velocity.x)) * MAX_MOVE_VELOCITY;
-
-        if (this._velocity.y < MAX_FALL_VELOCITY)
-            this._velocity.y = MAX_FALL_VELOCITY;
-
-        currentPosition.x += this._velocity.x * Time.fixedDeltaTime;
-        currentPosition.y += this._velocity.y * Time.fixedDeltaTime;
-
-        // TODO : Replace with raycast
-        if (currentPosition.y < 1) {
-            currentPosition.y = 1;
-            this._velocity.y = 0;
-        }
-
-        this.transform.position = currentPosition;
+    public override awake(): void {
+        this._rigidbody = this.getComponent(Rigidbody2D);
     }
 
-    public jump() {
-        if (!this.isOnGround()) return;
+    public override fixedUpdate(): void {
 
-        this._velocity.y = JUMP_VELOCITY;
+        if (this.rigidbody.getVelocity().y <= 0)
+            this.rigidbody.addForce({ x: 0, y: GRAVITY_MULTIPLIER * GRAVITY });
+        else
+            this.rigidbody.addForce({ x: 0, y: GRAVITY });
+
+        if (this._movement === Movement.Right)
+            this.rigidbody.addForce({ x: MOVE_ACCELERATION, y: 0 })
+        else if (this._movement === Movement.Left)
+            this.rigidbody.addForce({ x: -1 * MOVE_ACCELERATION, y: 0 })
+
+        const currentVelocity = this.rigidbody.getVelocity();
+
+        if (this._movement === Movement.Stop)
+            currentVelocity.x = 0;
+
+        if (this._isJumping) {
+            currentVelocity.y = JUMP_VELOCITY;
+            this._isJumping = false;
+        }
+
+        if (Math.abs(currentVelocity.x) > MAX_MOVE_VELOCITY)
+            currentVelocity.x = sign(currentVelocity.x) * MAX_MOVE_VELOCITY;
+
+        if (currentVelocity.y < MAX_FALL_VELOCITY)
+            currentVelocity.y = MAX_FALL_VELOCITY;
+
+        this.rigidbody.setVelocity(currentVelocity);
+    }
+
+    // public override 
+
+    public jump() {
+        // if (!this.isOnGround()) return;
+
+        this._isJumping = true; // Refactor with InputActions
     }
 
     public moveRight() {
-        this._acceleration.x = MOVE_ACCELERATION;
+        this._movement = Movement.Right;
     }
 
     public moveLeft() {
-        this._acceleration.x = -1 * MOVE_ACCELERATION;
+        this._movement = Movement.Left;
     }
 
     public stop() {
-        this._acceleration.x = 0;
-        this._velocity.x = 0;
+        this._movement = Movement.Stop;
     }
 
     private isOnGround(): boolean {
@@ -83,5 +93,12 @@ export class PlayerAgent extends Component {
         //     return false;
 
         // return true;
+    }
+
+    private get rigidbody(): Rigidbody2D {
+        if (this._rigidbody)
+            return this._rigidbody;
+
+        throw new Error("PlayerAgent does not have a rigidbody component!");
     }
 }
