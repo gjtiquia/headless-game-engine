@@ -1,4 +1,4 @@
-import { ComponentConfig, ComponentConstructor, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
+import { ComponentConfig, ComponentConstructor, ComponentFields, GameObject, Vector2, clamp, sign } from "@headless-game-engine/core";
 import { Collider2D } from "../Collider2D";
 
 const DEFAULT_OFFSET: Vector2 = { x: 0, y: 0 }
@@ -119,20 +119,5 @@ export class BoxCollider2D extends Collider2D {
 
     private get maxY() {
         return this.transform.position.y + (this._size.y / 2) + this._offset.y
-    }
-}
-
-// TODO : Put this in headless-game-engine core
-function sign(value: number): number {
-    return value < 0 ? -1 : 1;
-}
-
-function clamp(value: number, min: number, max: number): number {
-    if (value < min) {
-        return min;
-    } else if (value > max) {
-        return max;
-    } else {
-        return value;
     }
 }

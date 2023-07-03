@@ -1,4 +1,9 @@
 export {
+    sign,
+    clamp
+} from "./utils"
+
+export {
     Vector2,
     Vector3
 } from "./types"
