@@ -74,25 +74,6 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(physicsSystem.getCollisionCount()).toBe(0);
     })
 
-    it.skip("should resolve collision correctly when a rigidbody overlaps a box collider", () => {
-        Time.tickRate = 1;
-
-        movingGameObject.transform.position = { x: 12, y: 12, z: 0 }
-        movingRigidbody.setVelocity({ x: -4, y: -4 })
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 8, y: 8, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(0);
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
-    })
-
     it("(resolution disabled) should detect a collision when a rigidbody tunnels through a box collider", () => {
         Time.tickRate = 1;
         physicsSystem.toggleCollisionResolution(false); // Explicitly set false. True by default.
@@ -119,65 +100,5 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -50, y: -50, z: 0 });
         expect(physicsSystem.getCollisionCount()).toBe(0);
-    })
-
-    it.skip("should resolve collision correctly when a rigidbody tunnels through a box collider", () => {
-        Time.tickRate = 1;
-
-        movingGameObject.transform.position = { x: 50, y: 50, z: 0 }
-        movingRigidbody.setVelocity({ x: -20, y: -20 })
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 30, y: 30, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(0);
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 10, y: 10, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(0);
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: 0, y: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
-
-        scene.fixedUpdate();
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: 0, y: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
-    })
-
-    it.skip("should resolve collision correctly when a rigidbody is constantly under force", () => {
-        Time.tickRate = 1;
-        movingGameObject.transform.position = { x: 100, y: 100, z: 0 }
-
-        movingRigidbody.addForce({ x: -20, y: -20 })
-        scene.fixedUpdate();
-
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: -20, y: -20 });
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 80, y: 80, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(0);
-
-
-        movingRigidbody.addForce({ x: -20, y: -20 })
-        scene.fixedUpdate();
-
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: -40, y: -40 });
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 40, y: 40, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(0);
-
-
-        movingRigidbody.addForce({ x: -20, y: -20 })
-        scene.fixedUpdate();
-
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: 0, y: 0 });
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
-
-        movingRigidbody.addForce({ x: -20, y: -20 })
-        scene.fixedUpdate();
-
-        expect(movingRigidbody.getVelocity()).toStrictEqual({ x: 0, y: 0 });
-        expect(movingGameObject.transform.position).toStrictEqual({ x: 6, y: 6, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
     })
 })

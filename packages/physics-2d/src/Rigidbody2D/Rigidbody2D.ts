@@ -93,8 +93,17 @@ export class Rigidbody2D extends Component {
     }
 
     private resolveAABBCollisionWithStaticAABB(rigidbodyCollider: BoxCollider2D, staticCollider: BoxCollider2D): void {
-        // TODO : Resolve while making use of rigidbody's cached position, velocity etc.
 
-        throw new Error("No resolution logic implemented yet!")
+        const pointA: Vector2 = this.getCachedPositionBeforeIntegration();
+        const pointB = this.transform.position;
+        const padding: Vector2 = rigidbodyCollider.half
+
+        const intersection = staticCollider.getIntersectionWithLineSegment(pointA, pointB, padding);
+        if (!intersection) return;
+
+        this.transform.position = { ...intersection!, z: pointB.z };
+
+        // TODO : Take velocity into account for bounce / slide
+        this._velocity = { x: 0, y: 0 }
     }
 }
