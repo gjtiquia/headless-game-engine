@@ -4,8 +4,7 @@ import { RectRenderer, RectRendererFields } from "../index.js";
 const RectRendererComponent: ComponentConfig<RectRenderer, RectRendererFields> = {
     component: RectRenderer,
     componentFields: {
-        size: { x: 6, y: 3 },
-        offset: { x: 3, y: 0 }
+        size: { x: 6, y: 3 }
     }
 }
 

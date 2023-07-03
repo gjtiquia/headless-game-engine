@@ -1,14 +1,8 @@
 import { ComponentConfig, GameObjectConfig } from "@headless-game-engine/core";
-import { PlayerAgent, RectRenderer, RectRendererFields } from "../index.js";
+import { PlayerAgent, RectRenderer, RectRendererConfig, RectRendererFields } from "../index.js";
 import { Rigidbody2DConfig } from "@headless-game-engine/physics-2d";
 
-const rectRendererComponent: ComponentConfig<RectRenderer, RectRendererFields> = {
-    component: RectRenderer,
-    componentFields: {
-        size: { x: 1, y: 1 },
-        character: "0"
-    }
-}
+const rectRendererComponent = new RectRendererConfig({ size: { x: 1, y: 1 }, character: "0" })
 
 const playerAgentComponent: ComponentConfig<PlayerAgent> = {
     component: PlayerAgent

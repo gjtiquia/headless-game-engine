@@ -1,7 +1,17 @@
-import { Component, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
+import { Component, ComponentConfig, ComponentConstructor, ComponentFields, GameObject, Vector2 } from "@headless-game-engine/core";
 
 const DEFAULT_OFFSET: Vector2 = { x: 0, y: 0 }
 const DEFAULT_CHARACTER = "x";
+
+export class RectRendererConfig implements ComponentConfig<RectRenderer, RectRendererFields> {
+    component: ComponentConstructor<RectRenderer, RectRendererFields>;
+    componentFields: RectRendererFields;
+
+    constructor(fields: RectRendererFields) {
+        this.component = RectRenderer;
+        this.componentFields = fields;
+    }
+}
 
 export interface RectRendererFields extends ComponentFields {
     size: Vector2
@@ -11,6 +21,7 @@ export interface RectRendererFields extends ComponentFields {
     // TODO : Sorting Order
 }
 
+/** The position is at the center of the rect by default. */
 export class RectRenderer extends Component {
     private _size: Vector2;
     private _offset: Vector2;
@@ -34,10 +45,13 @@ export class RectRenderer extends Component {
     public get bottomLeftPosition(): Vector2 {
         const currentPosition = this.transform.position;
 
-        const x = currentPosition.x - this._offset.x;
-        const y = currentPosition.y - this._offset.y;
+        const bottomLeftX = currentPosition.x - this._size.x / 2;
+        const bottomLeftY = currentPosition.y - this._size.y / 2;
 
-        return { x, y }
+        const offsetX = bottomLeftX - this._offset.x;
+        const offsetY = bottomLeftY - this._offset.y;
+
+        return { x: offsetX, y: offsetY }
     }
 
     public setSize(size: Vector2) {

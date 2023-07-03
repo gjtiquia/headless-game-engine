@@ -12,31 +12,36 @@ export const gameScene: SceneConfig = {
             ...PlayerPrefab,
             transform: { position: { x: 5, y: 15, z: 0 } }
         },
+
         {
             ...PlatformPrefab,
             name: "Base Platform",
-            transform: { position: { x: 0, y: 0, z: 0 } }
+            transform: { position: { x: 40, y: 0, z: 0 } }
+        },
+
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 20, y: 5, z: 0 } }
         },
         {
             ...PlatformPrefab,
-            transform: { position: { x: 10, y: 5, z: 0 } }
+            transform: { position: { x: 60, y: 5, z: 0 } }
+        },
+
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 40, y: 10, z: 0 } }
+        },
+
+        {
+            ...PlatformPrefab,
+            transform: { position: { x: 20, y: 15, z: 0 } }
         },
         {
             ...PlatformPrefab,
-            transform: { position: { x: 50, y: 5, z: 0 } }
+            transform: { position: { x: 60, y: 15, z: 0 } }
         },
-        {
-            ...PlatformPrefab,
-            transform: { position: { x: 30, y: 10, z: 0 } }
-        },
-        {
-            ...PlatformPrefab,
-            transform: { position: { x: 10, y: 15, z: 0 } }
-        },
-        {
-            ...PlatformPrefab,
-            transform: { position: { x: 50, y: 15, z: 0 } }
-        },
+
         {
             ...BoxPrefab,
             transform: { position: { x: 40, y: 3, z: 0 } }

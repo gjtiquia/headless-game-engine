@@ -59,8 +59,8 @@ export class PlayerAgent extends Component {
 
         // TODO : Put in late update?
         // TODO : should be done with the collision resolution
-        if (currentPosition.y < 1) {
-            currentPosition.y = 1;
+        if (currentPosition.y < 2) {
+            currentPosition.y = 2;
             currentVelocity.y = 0;
         }
 
