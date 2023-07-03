@@ -1,4 +1,4 @@
-import { EngineClock, sleep } from "@headless-game-engine/clock";
+import { EngineClock } from "@headless-game-engine/clock";
 import { Vector2 } from "@headless-game-engine/core";
 
 import * as readline from "readline"
@@ -6,7 +6,6 @@ import * as readline from "readline"
 import { gameEngine } from "./gameEngine.config.js";
 import { PlayerAgent, RectRenderer } from "./assets/index.js";
 import { RenderClock } from "./RenderClock.js";
-import { Physics2D } from "./Physics2D.js";
 
 const SCREEN_SIZE: Vector2 = { x: 80, y: 20 }
 const REFRESH_RATE = 120;

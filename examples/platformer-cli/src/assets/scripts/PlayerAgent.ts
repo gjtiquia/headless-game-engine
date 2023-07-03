@@ -1,6 +1,5 @@
-import { Time } from "@headless-game-engine/clock";
-import { Component, Vector2 } from "@headless-game-engine/core";
-import { Physics2D } from "../../Physics2D.js";
+import { Component, sign } from "@headless-game-engine/core";
+import { Rigidbody2D } from "@headless-game-engine/physics-2d";
 
 const GRAVITY = -80;
 const GRAVITY_MULTIPLIER = 2.5;
@@ -11,59 +10,84 @@ const MAX_FALL_VELOCITY = -30;
 const MOVE_ACCELERATION = 100;
 const MAX_MOVE_VELOCITY = 40;
 
+// type MoveState = "movingLeft" | "movingRight" | "stopped";
+
+enum Input {
+    Left,
+    Right,
+    Stop
+}
+
 export class PlayerAgent extends Component {
-    private _acceleration: Vector2 = { x: 0, y: GRAVITY };
-    private _velocity: Vector2 = { x: 0, y: 0 };
+    private _rigidbody?: Rigidbody2D;
+    private _input: Input = Input.Stop;
+    private _isJumping: boolean = false;
+
+    public override awake(): void {
+        this._rigidbody = this.getComponent(Rigidbody2D);
+    }
 
     public override fixedUpdate(): void {
-        // return;
 
-        const previousPosition = this.transform.position;
-        const currentPosition = { ...previousPosition };
-
-        if (this._velocity.y <= 0)
-            this._acceleration.y = GRAVITY_MULTIPLIER * GRAVITY;
+        if (this.rigidbody.getVelocity().y <= 0)
+            this.rigidbody.addForce({ x: 0, y: GRAVITY_MULTIPLIER * GRAVITY });
         else
-            this._acceleration.y = GRAVITY;
+            this.rigidbody.addForce({ x: 0, y: GRAVITY });
 
-        this._velocity.x += this._acceleration.x * Time.fixedDeltaTime;
-        this._velocity.y += this._acceleration.y * Time.fixedDeltaTime;
+        if (this._input === Input.Right)
+            this.rigidbody.addForce({ x: MOVE_ACCELERATION, y: 0 })
+        else if (this._input === Input.Left)
+            this.rigidbody.addForce({ x: -1 * MOVE_ACCELERATION, y: 0 })
 
-        if (Math.abs(this._velocity.x) > MAX_MOVE_VELOCITY)
-            this._velocity.x = (this._velocity.x / Math.abs(this._velocity.x)) * MAX_MOVE_VELOCITY;
+        const currentVelocity = this.rigidbody.getVelocity();
 
-        if (this._velocity.y < MAX_FALL_VELOCITY)
-            this._velocity.y = MAX_FALL_VELOCITY;
+        if (this._input === Input.Stop)
+            currentVelocity.x = 0;
 
-        currentPosition.x += this._velocity.x * Time.fixedDeltaTime;
-        currentPosition.y += this._velocity.y * Time.fixedDeltaTime;
+        // if (this._isJumping) {
+        //     currentVelocity.y = JUMP_VELOCITY;
+        //     this._isJumping = false;
+        // }
 
-        // TODO : Replace with raycast
+        if (Math.abs(currentVelocity.x) > MAX_MOVE_VELOCITY)
+            currentVelocity.x = sign(currentVelocity.x) * MAX_MOVE_VELOCITY;
+
+        if (currentVelocity.y < MAX_FALL_VELOCITY)
+            currentVelocity.y = MAX_FALL_VELOCITY;
+
+        const currentPosition = this.transform.position;
+
+        // TODO : Put in late update?
+        // TODO : should be done with the collision resolution
         if (currentPosition.y < 1) {
             currentPosition.y = 1;
-            this._velocity.y = 0;
+            currentVelocity.y = 0;
         }
 
+        this.rigidbody.setVelocity(currentVelocity);
+
+        // TODO : should be done with the collision resolution
         this.transform.position = currentPosition;
     }
 
-    public jump() {
-        if (!this.isOnGround()) return;
+    // public override 
 
-        this._velocity.y = JUMP_VELOCITY;
+    public jump() {
+        // if (!this.isOnGround()) return;
+
+        this._isJumping = true; // Refactor with InputActions
     }
 
     public moveRight() {
-        this._acceleration.x = MOVE_ACCELERATION;
+        this._input = Input.Right;
     }
 
     public moveLeft() {
-        this._acceleration.x = -1 * MOVE_ACCELERATION;
+        this._input = Input.Left;
     }
 
     public stop() {
-        this._acceleration.x = 0;
-        this._velocity.x = 0;
+        this._input = Input.Stop;
     }
 
     private isOnGround(): boolean {
@@ -83,5 +107,12 @@ export class PlayerAgent extends Component {
         //     return false;
 
         // return true;
+    }
+
+    private get rigidbody(): Rigidbody2D {
+        if (this._rigidbody)
+            return this._rigidbody;
+
+        throw new Error("PlayerAgent does not have a rigidbody component!");
     }
 }

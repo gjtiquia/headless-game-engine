@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@headless-game-engine/core": "*",
-        "@headless-game-engine/clock": "*"
+        "@headless-game-engine/clock": "*",
+        "@headless-game-engine/physics-2d": "*"
     }
 }
