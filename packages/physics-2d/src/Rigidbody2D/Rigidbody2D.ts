@@ -19,22 +19,26 @@ export interface Rigidbody2DFields extends ComponentFields {
 
 export class Rigidbody2D extends Component {
     private _cachedPositionBeforeIntegration: Vector2;
-    private _netAcceleration: Vector2;
     private _velocity: Vector2;
 
     constructor(gameObject: GameObject, fields: Rigidbody2DFields) {
         super(gameObject, fields)
 
         this._cachedPositionBeforeIntegration = { x: 0, y: 0 };
-        this._netAcceleration = { x: 0, y: 0 };
         this._velocity = { x: 0, y: 0 };
     }
 
     public addForce(force: Vector2): void {
-        // F = ma, Assuming mass = 1 and force is applied over time
+        // dF = m * da
+        // Assuming mass = 1 and force is applied over time 
+        // => da = dF
 
-        this._netAcceleration.x += force.x * Time.fixedDeltaTime;
-        this._netAcceleration.y += force.y * Time.fixedDeltaTime;
+        // da = dv/dt 
+        // => dv = da * dt 
+        // => dv = dF * dt
+
+        this._velocity.x += force.x * Time.fixedDeltaTime;
+        this._velocity.y += force.y * Time.fixedDeltaTime;
     }
 
     public setVelocity(velocity: Vector2): void {
@@ -54,16 +58,12 @@ export class Rigidbody2D extends Component {
     }
 
     public integrateMovement(): void {
-        this._velocity.x += this._netAcceleration.x;
-        this._velocity.y += this._netAcceleration.y;
-
         const position = this.transform.position;
 
         position.x += this._velocity.x * Time.fixedDeltaTime;
         position.y += this._velocity.y * Time.fixedDeltaTime;
 
         this.transform.position = position;
-        this._netAcceleration = { x: 0, y: 0 }; // Reset the acceleration
     }
 
     public hasContinuousCollisionWithStaticCollider(rigidbodyCollider: Collider2D, staticCollider: Collider2D): boolean {
