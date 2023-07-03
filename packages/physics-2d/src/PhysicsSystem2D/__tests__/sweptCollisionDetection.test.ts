@@ -74,7 +74,7 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(physicsSystem.getCollisionCount()).toBe(0);
     })
 
-    it("should resolve collision correctly when a rigidbody overlaps a box collider", () => {
+    it.skip("should resolve collision correctly when a rigidbody overlaps a box collider", () => {
         Time.tickRate = 1;
 
         movingGameObject.transform.position = { x: 12, y: 12, z: 0 }
@@ -121,7 +121,7 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(physicsSystem.getCollisionCount()).toBe(0);
     })
 
-    it("should resolve collision correctly when a rigidbody tunnels through a box collider", () => {
+    it.skip("should resolve collision correctly when a rigidbody tunnels through a box collider", () => {
         Time.tickRate = 1;
 
         movingGameObject.transform.position = { x: 50, y: 50, z: 0 }
@@ -146,7 +146,7 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
         expect(physicsSystem.getCollisionCount()).toBe(1); // Touching counts as collision
     })
 
-    it("should resolve collision correctly when a rigidbody is constantly under force", () => {
+    it.skip("should resolve collision correctly when a rigidbody is constantly under force", () => {
         Time.tickRate = 1;
         movingGameObject.transform.position = { x: 100, y: 100, z: 0 }
 

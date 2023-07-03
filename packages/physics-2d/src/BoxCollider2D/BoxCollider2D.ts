@@ -38,6 +38,8 @@ export class BoxCollider2D extends Collider2D {
     }
 
     public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
+        // TODO : Rewrite this with Test Driven Development, add tests to this method call (and potentially rewrite the math)
+
         // References
         // https://noonat.github.io/intersect/#aabb-vs-segment
 
