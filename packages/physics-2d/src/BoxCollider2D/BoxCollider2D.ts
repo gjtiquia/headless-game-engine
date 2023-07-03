@@ -29,17 +29,17 @@ export class BoxCollider2D extends Collider2D {
         this._offset = fields.offset ?? DEFAULT_OFFSET;
     }
 
+    // PUBLIC METHODS
     public get size(): Vector2 {
         return this._size;
     }
 
-    public get half(): Vector2 {
-        return { x: (this._size.x / 2), y: (this._size.y / 2) }
+    public setSize(size: Vector2) {
+        this._size = size;
     }
 
-    public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
-        const intersection = this.getIntersectionWithLineSegment(pointA, pointB, padding);
-        return (intersection !== undefined);
+    public get half(): Vector2 {
+        return { x: (this._size.x / 2), y: (this._size.y / 2) }
     }
 
     public getIntersectionWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): Vector2 | undefined {
@@ -81,6 +81,12 @@ export class BoxCollider2D extends Collider2D {
         return intersection;
     }
 
+    // Collider2D INTERFACE
+    public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
+        const intersection = this.getIntersectionWithLineSegment(pointA, pointB, padding);
+        return (intersection !== undefined);
+    }
+
     public override isIntersectingWith(collider: Collider2D): boolean {
         if (collider instanceof BoxCollider2D) {
             return this.isIntersectingWithBoxCollider(collider);
@@ -89,6 +95,7 @@ export class BoxCollider2D extends Collider2D {
         throw new Error(`Did not implement intersection logic with ${typeof collider}!`)
     }
 
+    // PRIVATE METHODS
     private isIntersectingWithBoxCollider(boxCollider: BoxCollider2D): boolean {
         // https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection#aabb_vs._aabb
 
