@@ -30,8 +30,8 @@ export class RectRenderer extends Component {
     constructor(gameObject: GameObject, fields: RectRendererFields) {
         super(gameObject, fields);
         this._size = fields.size;
-        this._offset = fields.offset ? fields.offset : DEFAULT_OFFSET;
-        this._character = fields.character ? fields.character : DEFAULT_CHARACTER;
+        this._offset = fields.offset ?? DEFAULT_OFFSET;
+        this._character = fields.character ?? DEFAULT_CHARACTER;
     }
 
     public get size(): Vector2 {

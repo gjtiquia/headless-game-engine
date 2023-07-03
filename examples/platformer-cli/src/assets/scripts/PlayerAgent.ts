@@ -10,9 +10,7 @@ const MAX_FALL_VELOCITY = -30;
 const MOVE_ACCELERATION = 100;
 const MAX_MOVE_VELOCITY = 40;
 
-// type MoveState = "movingLeft" | "movingRight" | "stopped";
-
-enum Input {
+enum Movement {
     Left,
     Right,
     Stop
@@ -20,7 +18,7 @@ enum Input {
 
 export class PlayerAgent extends Component {
     private _rigidbody?: Rigidbody2D;
-    private _input: Input = Input.Stop;
+    private _movement: Movement = Movement.Stop;
     private _isJumping: boolean = false;
 
     public override awake(): void {
@@ -34,14 +32,14 @@ export class PlayerAgent extends Component {
         else
             this.rigidbody.addForce({ x: 0, y: GRAVITY });
 
-        if (this._input === Input.Right)
+        if (this._movement === Movement.Right)
             this.rigidbody.addForce({ x: MOVE_ACCELERATION, y: 0 })
-        else if (this._input === Input.Left)
+        else if (this._movement === Movement.Left)
             this.rigidbody.addForce({ x: -1 * MOVE_ACCELERATION, y: 0 })
 
         const currentVelocity = this.rigidbody.getVelocity();
 
-        if (this._input === Input.Stop)
+        if (this._movement === Movement.Stop)
             currentVelocity.x = 0;
 
         // if (this._isJumping) {
@@ -55,19 +53,7 @@ export class PlayerAgent extends Component {
         if (currentVelocity.y < MAX_FALL_VELOCITY)
             currentVelocity.y = MAX_FALL_VELOCITY;
 
-        const currentPosition = this.transform.position;
-
-        // TODO : Put in late update?
-        // TODO : should be done with the collision resolution
-        if (currentPosition.y < 2) {
-            currentPosition.y = 2;
-            currentVelocity.y = 0;
-        }
-
         this.rigidbody.setVelocity(currentVelocity);
-
-        // TODO : should be done with the collision resolution
-        this.transform.position = currentPosition;
     }
 
     // public override 
@@ -79,15 +65,15 @@ export class PlayerAgent extends Component {
     }
 
     public moveRight() {
-        this._input = Input.Right;
+        this._movement = Movement.Right;
     }
 
     public moveLeft() {
-        this._input = Input.Left;
+        this._movement = Movement.Left;
     }
 
     public stop() {
-        this._input = Input.Stop;
+        this._movement = Movement.Stop;
     }
 
     private isOnGround(): boolean {

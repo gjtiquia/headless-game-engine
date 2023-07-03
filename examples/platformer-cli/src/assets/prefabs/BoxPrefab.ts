@@ -1,17 +1,20 @@
-import { ComponentConfig, GameObjectConfig } from "@headless-game-engine/core";
-import { RectRenderer, RectRendererFields } from "../index.js";
+import { GameObjectConfig } from "@headless-game-engine/core";
+import { BoxCollider2DConfig } from "@headless-game-engine/physics-2d";
+import { RectRendererConfig } from "../index.js";
 
-const RectRendererComponent: ComponentConfig<RectRenderer, RectRendererFields> = {
-    component: RectRenderer,
-    componentFields: {
-        size: { x: 6, y: 3 }
-    }
-}
+const rectRenderer = new RectRendererConfig({
+    size: { x: 6, y: 3 }
+})
 
-// TODO : BoxCollider2D component
+const boxCollider = new BoxCollider2DConfig({
+    size: { x: 6, y: 3 }
+})
 
 export const BoxPrefab: GameObjectConfig = {
     name: "Box",
     transform: { position: { x: 0, y: 0, z: 0 } },
-    components: [RectRendererComponent]
+    components: [
+        rectRenderer,
+        boxCollider
+    ]
 }

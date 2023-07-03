@@ -10,7 +10,7 @@ export const gameScene: SceneConfig = {
     gameObjects: [
         {
             ...PlayerPrefab,
-            transform: { position: { x: 5, y: 15, z: 0 } }
+            transform: { position: { x: 5, y: 12, z: 0 } }
         },
 
         {
