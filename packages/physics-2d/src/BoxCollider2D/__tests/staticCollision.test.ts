@@ -1,8 +1,8 @@
 import { GameEngine, GameObjectConfig, SceneConfig, Vector2 } from "@headless-game-engine/core"
-import { BoxCollider2D, BoxCollider2DConfig } from "./BoxCollider2D"
-import { Collider2D } from "..";
+import { BoxCollider2D, BoxCollider2DConfig } from "../BoxCollider2D"
+import { Collider2D } from "../..";
 
-describe("BoxCollider2D", () => {
+describe("BoxCollider2D: Static Collision", () => {
     it("should be able to detect two boxes that are colliding", () => {
         const scene: SceneConfig = givenSceneWithTwoBoxes({ x: 5, y: 5 }, { x: 10, y: 10 });
         const { boxColliderA, boxColliderB } = getBoxColliders(scene)

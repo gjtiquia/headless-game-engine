@@ -38,16 +38,21 @@ export class BoxCollider2D extends Collider2D {
     }
 
     public override isIntersectingWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): boolean {
-        // TODO : Rewrite this with Test Driven Development, add tests to this method call (and potentially rewrite the math)
+        const intersection = this.getIntersectionWithLineSegment(pointA, pointB, padding);
+        return (intersection !== undefined);
+    }
 
+    public getIntersectionWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): Vector2 | undefined {
         // References
         // https://noonat.github.io/intersect/#aabb-vs-segment
+
+        const delta = { x: pointB.x - pointA.x, y: pointB.y - pointA.y }
 
         const paddingX = padding ? padding.x : 0;
         const paddingY = padding ? padding.y : 0;
 
-        const scaleX = 1.0 / pointB.x;
-        const scaleY = 1.0 / pointB.y;
+        const scaleX = 1.0 / delta.x;
+        const scaleY = 1.0 / delta.y;
 
         const signX = sign(scaleX);
         const signY = sign(scaleY);
@@ -59,15 +64,21 @@ export class BoxCollider2D extends Collider2D {
         const farTimeY = (this.pos.y + signY * (this.half.y + paddingY) - pointA.y) * scaleY;
 
         if (nearTimeX > farTimeY || nearTimeY > farTimeX)
-            return false;
+            return undefined;
 
         const nearTime = nearTimeX > nearTimeY ? nearTimeX : nearTimeY;
         const farTime = farTimeX < farTimeY ? farTimeX : farTimeY;
 
         if (nearTime >= 1 || farTime <= 0)
-            return false;
+            return undefined;
 
-        return true;
+        const hitTime = clamp(nearTime, 0, 1);
+
+        const intersection: Vector2 = { x: 0, y: 0 };
+        intersection.x = pointA.x + delta.x * hitTime;
+        intersection.y = pointA.y + delta.y * hitTime;
+
+        return intersection;
     }
 
     public override isIntersectingWith(collider: Collider2D): boolean {
@@ -114,4 +125,14 @@ export class BoxCollider2D extends Collider2D {
 // TODO : Put this in headless-game-engine core
 function sign(value: number): number {
     return value < 0 ? -1 : 1;
+}
+
+function clamp(value: number, min: number, max: number): number {
+    if (value < min) {
+        return min;
+    } else if (value > max) {
+        return max;
+    } else {
+        return value;
+    }
 }
