@@ -104,6 +104,9 @@ export class Rigidbody2D extends Component {
         this.transform.position = { ...intersection!, z: pointB.z };
 
         // TODO : Take velocity into account for bounce / slide
-        this._velocity = { x: 0, y: 0 }
+
+        //! temporarily hardcode for platformer to only resolve vertical collision
+        this._velocity.y = 0;
+        this.transform.position = { ...intersection!, x: pointB.x, z: pointB.z };
     }
 }
