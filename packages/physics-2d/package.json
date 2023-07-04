@@ -1,6 +1,6 @@
 {
     "name": "@headless-game-engine/physics-2d",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "A minimalistic, framework-agnostic JavaScript game engine.",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
