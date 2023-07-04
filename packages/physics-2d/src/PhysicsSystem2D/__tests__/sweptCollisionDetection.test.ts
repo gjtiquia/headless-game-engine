@@ -67,7 +67,7 @@ describe("PhysicsSystem2D: Swept Collision Detection", () => {
 
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -4, y: -4, z: 0 });
-        expect(physicsSystem.getCollisionCount()).toBe(1); // Overlap box -> Out of box. Swept through the box so still counts as a collision.
+        expect(physicsSystem.getCollisionCount()).toBe(0); // Overlap box -> Out of box. No longer in box so no collision.
 
         scene.fixedUpdate();
         expect(movingGameObject.transform.position).toStrictEqual({ x: -8, y: -8, z: 0 });

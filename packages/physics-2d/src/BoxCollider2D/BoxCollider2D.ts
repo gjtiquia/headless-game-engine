@@ -72,12 +72,15 @@ export class BoxCollider2D extends Collider2D {
         if (nearTime >= 1 || farTime <= 0)
             return undefined;
 
-        const time = clamp(nearTime, 0, 1);
+        // Parallel to edge or pointA is inside the box => undefined
+        if (nearTime < 0)
+            return undefined;
 
-        const normal: Vector2 = { x: 0, y: 0 };
+        const time = clamp(nearTime, 0, 1);
 
         // Assumes 4 normal directions
         // Diagonal corner case will be seen as normal.y = -signY, which makes sense in a platformer game where you would want the player to slide horizontally
+        const normal: Vector2 = { x: 0, y: 0 };
         if (nearTimeX > nearTimeY) {
             normal.x = -signX;
             normal.y = 0;

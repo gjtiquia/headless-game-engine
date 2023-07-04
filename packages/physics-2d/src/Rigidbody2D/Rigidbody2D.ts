@@ -97,18 +97,18 @@ export class Rigidbody2D extends Component {
         // References
         // https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
 
-        const pointA: Vector2 = this.getCachedPositionBeforeIntegration();
-        const pointB = this.transform.position;
+        const positionBeforeIntegration: Vector2 = this.getCachedPositionBeforeIntegration();
+        const positionAfterIntegration = this.transform.position;
         const padding: Vector2 = rigidbodyCollider.half
 
-        const intersection = staticCollider.getIntersectionWithLineSegment(pointA, pointB, padding);
+        const intersection = staticCollider.getIntersectionWithLineSegment(positionBeforeIntegration, positionAfterIntegration, padding);
         if (!intersection) return;
 
         const { point, normal, time } = intersection;
 
         //! ==== This code stops the rigidbody completely, no sliding + zero velocity
-        this.transform.position = { ...point!, z: pointB.z };
-        this._velocity = { x: 0, y: 0 }
+        // this.transform.position = { ...point!, z: pointB.z };
+        // this._velocity = { x: 0, y: 0 }
         //! =======================
 
         //! temporarily hardcode for platformer to only resolve vertical collision
@@ -117,5 +117,16 @@ export class Rigidbody2D extends Component {
         //! =====================================================
 
         // TODO : Take velocity into account for bounce / slide
+
+        const currentVelocity = this.getVelocity();
+        const dotproduct = (currentVelocity.x * normal.y + currentVelocity.y * normal.x) * (1 - time);
+        currentVelocity.x = dotproduct * normal.y;
+        currentVelocity.y = dotproduct * normal.x;
+        this.setVelocity(currentVelocity);
+
+        const currentPosition = { ...point };
+        currentPosition.x += currentVelocity.x * Time.fixedDeltaTime;
+        currentPosition.y += currentVelocity.y * Time.fixedDeltaTime;
+        this.transform.position = { ...currentPosition, z: positionAfterIntegration.z };
     }
 }
