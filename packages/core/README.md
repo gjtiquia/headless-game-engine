@@ -2,84 +2,24 @@
 
 A minimalistic, framework-agnostic JavaScript game engine.
 
-Basic TypeScript CLI Game:
+This is the core package for the Headless Game Engine.
 
-```TypeScript
-import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-game-engine/core";
+Other packages are completely optional. It is highly encouraged to extend directly from the core package for creating custom solutions for your game.
 
-// A Custom Component
-class MovingPoint extends Component {
-    private _acceleration = -0.03;
-    private _velocity = 0;
+Contains
 
-    public override fixedUpdate(): void {
-        const currentPosition = this.transform.position;
+- Component
+- GameObject
+- System
+- Scene
+- GameEngine
 
-        this._velocity += this._acceleration;
-        currentPosition.x += this._velocity;
+The GameEngine runs the scene.
 
-        if (currentPosition.x < 0) {
-            this._velocity *= -1 * 0.65
-            currentPosition.x = 0;
-        }
+Scene contains GameObjects and Systems.
 
-        this.transform.position = currentPosition;
-    }
-}
+GameObjects contains Components.
 
-const screenWidth = 80;
-const totalUpdateCount = 350;
-const fps = 40;
+Systems can be optionally used to drive the components if an ECS architecture is desired.
 
-const main = async () => {
-    const movingPointPrefab: GameObjectConfig = {
-        name: "MovingPoint",
-        transform: { position: { x: screenWidth, y: 0, z: 0 } },
-        components: [{ component: MovingPoint }]
-    }
-
-    const sceneConfig: SceneConfig = {
-        gameObjects: [movingPointPrefab]
-    }
-
-    const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig });
-
-    const movingPointInstance = gameEngine.findGameObjectByName("MovingPoint");
-    if (!movingPointInstance) {
-        console.error("Cannot find game object with name 'MovingPoint'!")
-        return;
-    }
-
-    gameEngine.awake();
-
-    let updateCount = 0;
-    while (updateCount <= totalUpdateCount) {
-        gameEngine.fixedUpdate();
-
-        const position = Math.round(movingPointInstance.transform.position.x);
-        render(position, updateCount);
-
-        updateCount++;
-        await sleep(1000 / fps);
-    }
-
-    console.clear();
-}
-
-const sleep = (ms: number) => {
-    return new Promise((resolve, reject) => setTimeout(resolve, ms));
-}
-
-const render = (position: number, updateCount: number) => {
-    const pointGraphic = "0";
-    const leftSpace = " ".repeat(position);
-    const rightSpace = " ".repeat(screenWidth - position);
-
-    console.clear();
-    console.log(`FPS: ${fps}, Update Count: ${updateCount}/${totalUpdateCount}`);
-    console.log(`|${leftSpace}${pointGraphic}${rightSpace}|`)
-}
-
-main();
-
-```
+Components and Systems can be easily extended.
