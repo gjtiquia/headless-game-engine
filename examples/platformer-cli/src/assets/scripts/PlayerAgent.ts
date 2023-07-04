@@ -4,7 +4,7 @@ import { Rigidbody2D } from "@headless-game-engine/physics-2d";
 const GRAVITY = -80;
 const GRAVITY_MULTIPLIER = 2.5;
 
-const JUMP_VELOCITY = 35;
+const JUMP_VELOCITY = 32;
 const MAX_FALL_VELOCITY = -30;
 
 const MOVE_ACCELERATION = 100;
