@@ -24,8 +24,10 @@ describe("BoxCollider2D: Line Segment Intersection", () => {
 
         const intersection = boxCollider.getIntersectionWithLineSegment(pointA, pointB);
         expect(intersection).toBeDefined();
-        expect(intersection?.x).toBeCloseTo(5);
-        expect(intersection?.y).toBeCloseTo(3);
+
+        const { point } = intersection!;
+        expect(point.x).toBeCloseTo(5);
+        expect(point.y).toBeCloseTo(3);
     })
 
     it("should be able to find the intersection point with padding", () => {
@@ -35,8 +37,10 @@ describe("BoxCollider2D: Line Segment Intersection", () => {
 
         const intersection = boxCollider.getIntersectionWithLineSegment(pointA, pointB, padding);
         expect(intersection).toBeDefined();
-        expect(intersection?.x).toBeCloseTo(4);
-        expect(intersection?.y).toBeCloseTo(4);
+
+        const { point } = intersection!;
+        expect(point.x).toBeCloseTo(4);
+        expect(point.y).toBeCloseTo(4);
     })
 
     it("should be able to find the intersection point when touch a corner", () => {
@@ -45,8 +49,10 @@ describe("BoxCollider2D: Line Segment Intersection", () => {
 
         const intersection = boxCollider.getIntersectionWithLineSegment(pointA, pointB);
         expect(intersection).toBeDefined();
-        expect(intersection?.x).toBeCloseTo(5);
-        expect(intersection?.y).toBeCloseTo(0);
+
+        const { point } = intersection!;
+        expect(point.x).toBeCloseTo(5);
+        expect(point.y).toBeCloseTo(0);
     })
 
     it("should return undefined if there is no intersection", () => {

@@ -94,6 +94,9 @@ export class Rigidbody2D extends Component {
 
     private resolveAABBCollisionWithStaticAABB(rigidbodyCollider: BoxCollider2D, staticCollider: BoxCollider2D): void {
 
+        // References
+        // https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
+
         const pointA: Vector2 = this.getCachedPositionBeforeIntegration();
         const pointB = this.transform.position;
         const padding: Vector2 = rigidbodyCollider.half
@@ -101,12 +104,18 @@ export class Rigidbody2D extends Component {
         const intersection = staticCollider.getIntersectionWithLineSegment(pointA, pointB, padding);
         if (!intersection) return;
 
-        this.transform.position = { ...intersection!, z: pointB.z };
+        const { point, normal, time } = intersection;
 
-        // TODO : Take velocity into account for bounce / slide
+        //! ==== This code stops the rigidbody completely, no sliding + zero velocity
+        this.transform.position = { ...point!, z: pointB.z };
+        this._velocity = { x: 0, y: 0 }
+        //! =======================
 
         //! temporarily hardcode for platformer to only resolve vertical collision
-        this._velocity.y = 0;
-        this.transform.position = { ...intersection!, x: pointB.x, z: pointB.z };
+        // this._velocity.y = 0;
+        // this.transform.position = { ...point!, x: pointB.x, z: pointB.z };
+        //! =====================================================
+
+        // TODO : Take velocity into account for bounce / slide
     }
 }
