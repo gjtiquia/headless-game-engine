@@ -87,3 +87,5 @@ npm run changeset:publish
 Immediately publishes the current commit to NPM.
 
 Do not add commits between versioning and publishing as it assumes the versioning commit to be the publishing commit.
+
+Git tags will be created. Remember to push the git tags.
