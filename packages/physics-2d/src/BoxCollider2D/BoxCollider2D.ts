@@ -42,7 +42,7 @@ export class BoxCollider2D extends Collider2D {
         return { x: (this._size.x / 2), y: (this._size.y / 2) }
     }
 
-    public getIntersectionWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2): Vector2 | undefined {
+    public getIntersectionWithLineSegment(pointA: Vector2, pointB: Vector2, padding?: Vector2) {
         // References
         // https://noonat.github.io/intersect/#aabb-vs-segment
 
@@ -72,13 +72,28 @@ export class BoxCollider2D extends Collider2D {
         if (nearTime >= 1 || farTime <= 0)
             return undefined;
 
-        const hitTime = clamp(nearTime, 0, 1);
+        // Parallel to edge or pointA is inside the box => undefined
+        if (nearTime < 0)
+            return undefined;
 
-        const intersection: Vector2 = { x: 0, y: 0 };
-        intersection.x = pointA.x + delta.x * hitTime;
-        intersection.y = pointA.y + delta.y * hitTime;
+        const time = clamp(nearTime, 0, 1);
 
-        return intersection;
+        // Assumes 4 normal directions
+        // Diagonal corner case will be seen as normal.y = -signY, which makes sense in a platformer game where you would want the player to slide horizontally
+        const normal: Vector2 = { x: 0, y: 0 };
+        if (nearTimeX > nearTimeY) {
+            normal.x = -signX;
+            normal.y = 0;
+        } else {
+            normal.x = 0;
+            normal.y = -signY;
+        }
+
+        const point: Vector2 = { x: 0, y: 0 };
+        point.x = pointA.x + delta.x * time;
+        point.y = pointA.y + delta.y * time;
+
+        return { point, normal, time };
     }
 
     // Collider2D INTERFACE
