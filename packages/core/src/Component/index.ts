@@ -1,7 +1,9 @@
 export {
     ComponentConfig,
     ComponentFields,
-    Component
+    Component,
+    AbstractComponentConstructor,
+    ComponentConstructor
 } from "./Component"
 
 // ! Remember to export this AFTER the abstract Component class definition

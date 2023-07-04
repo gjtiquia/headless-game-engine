@@ -1,5 +1,6 @@
 import { Scene, SceneConfig } from "../Scene";
 import { GameObject } from "../GameObject";
+import { Component, ComponentConstructor, ComponentFields } from "../Component";
 
 interface GameEngineEssentialConfig {
     initialSceneConfig: SceneConfig
@@ -26,7 +27,13 @@ export class GameEngine {
         this.initialize;
     }
 
-    public get tick() { return this._tick }
+    public get tick() {
+        return this._tick
+    }
+
+    public get activeScene() {
+        return this._activeScene
+    }
 
     public initialize(): void {
         this._tick = 0;
@@ -41,7 +48,15 @@ export class GameEngine {
         this._tick++;
     }
 
+    public destroy(): void {
+        this._activeScene.destroy();
+    }
+
     public findGameObjectByName(name: string): GameObject | undefined {
         return this._activeScene.findGameObjectByName(name);
+    }
+
+    public getComponents<T extends Component, F extends ComponentFields>(componentClass: ComponentConstructor<T, F>): T[] {
+        return this._activeScene.getComponents(componentClass);
     }
 }

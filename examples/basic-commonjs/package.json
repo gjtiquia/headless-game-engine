@@ -8,6 +8,7 @@
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "dependencies": {
-        "@headless-game-engine/core": "*"
+        "@headless-game-engine/core": "*",
+        "@headless-game-engine/clock": "*"
     }
 }

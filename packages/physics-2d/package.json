@@ -1,0 +1,44 @@
+{
+    "name": "@headless-game-engine/physics-2d",
+    "version": "0.0.1",
+    "description": "A minimalistic, framework-agnostic JavaScript game engine.",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "dev": "tsup src/index.ts --format esm,cjs --dts --clean --watch ",
+        "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+        "build:minify": "tsup src/index.ts --format esm,cjs --dts --minify --clean",
+        "test": "jest --verbose",
+        "test:detailed": "jest --verbose --detect-open-handles",
+        "test:coverage": "jest --coverage",
+        "test:watch": "jest --watchAll --coverage --verbose",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gjtiquia/headless-game-engine.git"
+    },
+    "keywords": [
+        "game-engine",
+        "gameengine",
+        "gamedev",
+        "game-dev",
+        "game",
+        "javascript",
+        "typescript"
+    ],
+    "author": "gjtiquia",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/gjtiquia/headless-game-engine/issues"
+    },
+    "homepage": "https://github.com/gjtiquia/headless-game-engine#readme",
+    "dependencies": {
+        "@headless-game-engine/core": "*",
+        "@headless-game-engine/clock": "*"
+    }
+}

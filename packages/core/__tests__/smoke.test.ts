@@ -59,4 +59,25 @@ describe("Smoke Tests", () => {
         dummyConfig.transform.position.x = 2;
         expect(dummy?.transform.position).not.toStrictEqual(dummyConfig.transform.position);
     })
+
+    it("should destroy correctly", () => {
+        const dummyConfig: GameObjectConfig = {
+            name: "Dummy",
+            transform: { position: { x: 0, y: 0, z: 0 } }
+        }
+
+        const gameEngine = new GameEngine({
+            initialSceneConfig: {
+                gameObjects: [dummyConfig]
+            }
+        })
+
+        const dummy1 = gameEngine.findGameObjectByName(dummyConfig.name);
+        expect(dummy1).toBeDefined();
+        expect(dummy1).toBeInstanceOf(GameObject);
+
+        gameEngine.destroy();
+        const dummy2 = gameEngine.findGameObjectByName(dummyConfig.name);
+        expect(dummy2).toBeUndefined();
+    })
 })

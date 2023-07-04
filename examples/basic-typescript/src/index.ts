@@ -1,16 +1,42 @@
 #!/usr/bin/env node
 
 import { Component, GameEngine, GameObjectConfig, SceneConfig } from "@headless-game-engine/core";
+import { EngineClock, Clock, Time, sleep } from "@headless-game-engine/clock";
+
+import * as readline from "readline"
+
+const SCREEN_WIDTH = 30;
+const REFRESH_RATE = 120;
+const MAX_RUNTIME = 300; // seconds
+
+const TICK_RATE = 60;
+
+const main = async () => {
+    EngineClock.start(gameEngine);
+    renderClock.start();
+
+    // TODO : Refactor
+    startListeningToKeypress();
+
+    await sleep(MAX_RUNTIME * 1000);
+    console.clear();
+
+    stopListeningToKeypress();
+    EngineClock.stop();
+    renderClock.stop();
+
+    quit();
+}
 
 class MovingPoint extends Component {
-    private _acceleration = -0.03;
+    private _acceleration = -50;
     private _velocity = 0;
 
     public override fixedUpdate(): void {
         const currentPosition = this.transform.position;
 
-        this._velocity += this._acceleration;
-        currentPosition.x += this._velocity;
+        this._velocity += this._acceleration * Time.fixedDeltaTime;
+        currentPosition.x += this._velocity * Time.fixedDeltaTime;
 
         if (currentPosition.x < 0) {
             this._velocity *= -1 * 0.65
@@ -19,59 +45,80 @@ class MovingPoint extends Component {
 
         this.transform.position = currentPosition;
     }
+
+    public jump(): void {
+        this._velocity = 50;
+    }
 }
 
-const screenWidth = 80;
-const totalUpdateCount = 350;
-const fps = 40;
+const movingPointPrefab: GameObjectConfig = {
+    name: "MovingPoint",
+    transform: { position: { x: 0, y: 0, z: 0 } },
+    components: [{ component: MovingPoint }]
+}
 
-const main = async () => {
-    const movingPointPrefab: GameObjectConfig = {
-        name: "MovingPoint",
-        transform: { position: { x: screenWidth, y: 0, z: 0 } },
-        components: [{ component: MovingPoint }]
-    }
+const sceneConfig: SceneConfig = {
+    gameObjects: [movingPointPrefab]
+}
 
-    const sceneConfig: SceneConfig = {
-        gameObjects: [movingPointPrefab]
-    }
+const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig });
+Time.tickRate = TICK_RATE;
 
-    const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig });
+const movingPointInstance = gameEngine.findGameObjectByName(movingPointPrefab.name);
+if (!movingPointInstance)
+    throw new Error(`Cannot find game object with name ${movingPointPrefab.name}!`)
 
-    const movingPointInstance = gameEngine.findGameObjectByName("MovingPoint");
-    if (!movingPointInstance) {
-        console.error("Cannot find game object with name 'MovingPoint'!")
-        return;
-    }
+const movingPointComponent = movingPointInstance.getComponent(MovingPoint);
+if (!movingPointComponent)
+    throw new Error(`Cannot find component with class ${MovingPoint.name}!`)
 
-    gameEngine.awake();
+const renderClock = new Clock(() => render(), 1000 / REFRESH_RATE);
 
-    let updateCount = 0;
-    while (updateCount <= totalUpdateCount) {
-        gameEngine.fixedUpdate();
+const render = () => {
+    // TODO : Interpolation
+    const position = Math.round(movingPointInstance.transform.position.x);
 
-        const position = Math.round(movingPointInstance.transform.position.x);
-        render(position, updateCount);
-
-        updateCount++;
-        await sleep(1000 / fps);
-    }
+    const pointGraphic = position > 0 ? "🏀" : "🏀";
+    const leftSpace = " ".repeat(Math.max(0, position));
+    const rightSpace = " ".repeat(Math.max(0, SCREEN_WIDTH - position));
 
     console.clear();
+    console.log(`Refresh Rate: ${REFRESH_RATE}, Tick Rate: ${TICK_RATE}, Ticks: ${gameEngine.tick}`);
+    console.log(`\n➡️${leftSpace}${pointGraphic}${rightSpace}|`)
+    console.log("\nHeadless Game Engine Demo");
+    console.log("\nPress Space to Jump.");
+    console.log("Press Ctrl-C to Quit.");
 }
 
-const sleep = (ms: number) => {
-    return new Promise((resolve, reject) => setTimeout(resolve, ms));
+function startListeningToKeypress() {
+    readline.emitKeypressEvents(process.stdin);
+
+    process.stdin.setRawMode(true);
+    process.stdin.on('keypress', keypressEventHandler);
 }
 
-const render = (position: number, updateCount: number) => {
-    const pointGraphic = "0";
-    const leftSpace = " ".repeat(position);
-    const rightSpace = " ".repeat(screenWidth - position);
+function stopListeningToKeypress() {
+    process.stdin.setRawMode(false);
+    process.stdin.removeListener('keypress', keypressEventHandler);
+}
 
-    console.clear();
-    console.log(`FPS: ${fps}, Update Count: ${updateCount}/${totalUpdateCount}`);
-    console.log(`|${leftSpace}${pointGraphic}${rightSpace}|`)
+function quit() {
+    process.exit();
+}
+
+function keypressEventHandler(str: string, key: readline.Key) {
+    // "Raw" mode so we must do our own kill switch
+    if (key.ctrl && key.name === "c") {
+        process.exit();
+    }
+
+    if (key.name === "space") {
+        onJumpPressed();
+    }
+}
+
+function onJumpPressed() {
+    movingPointComponent?.jump();
 }
 
 main();

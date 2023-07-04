@@ -11,7 +11,8 @@
     "test": "turbo run test",
     "test:force": "turbo run test --force",
     "clean": "turbo clean &&  turbo daemon clean && rm -rf node_modules",
-    "clean:daemon": "turbo daemon clean"
+    "clean:daemon": "turbo daemon clean",
+    "changeset": "changeset"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
