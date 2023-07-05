@@ -1,0 +1,18 @@
+{
+    "name": "examples-platformer-html",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "npm run build && node dist/index.js",
+        "dev": "tsup src/index.ts --format esm --clean --watch",
+        "build": "tsup src/index.ts --format esm --clean",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "dependencies": {
+        "@headless-game-engine/core": "*",
+        "@headless-game-engine/clock": "*",
+        "@headless-game-engine/physics-2d": "*"
+    }
+}
