@@ -5,17 +5,17 @@ import { EngineClock, Clock, Time, sleep } from "@headless-game-engine/clock";
 
 import * as readline from "readline"
 
-const SCREEN_WIDTH = 30;
-const REFRESH_RATE = 120;
+// Console Configuration
+const SCREEN_WIDTH = 30; // characters
+const REFRESH_RATE = 120; // Hz
 const MAX_RUNTIME = 300; // seconds
 
-const TICK_RATE = 60;
+// GameEngine Configuration
+const TICK_RATE = 60; // Ticks per second
 
 const main = async () => {
     EngineClock.start(gameEngine);
     renderClock.start();
-
-    // TODO : Refactor
     startListeningToKeypress();
 
     await sleep(MAX_RUNTIME * 1000);
@@ -28,6 +28,7 @@ const main = async () => {
     quit();
 }
 
+// Custom MovingPoint Component
 class MovingPoint extends Component {
     private _acceleration = -50;
     private _velocity = 0;
@@ -51,40 +52,39 @@ class MovingPoint extends Component {
     }
 }
 
+// MovingPoint Prefab Configuration
 const movingPointPrefab: GameObjectConfig = {
     name: "MovingPoint",
     transform: { position: { x: 0, y: 0, z: 0 } },
     components: [{ component: MovingPoint }]
 }
 
+// Scene Configuration
 const sceneConfig: SceneConfig = {
     gameObjects: [movingPointPrefab]
 }
 
+// Game Engine Initialization
 const gameEngine = new GameEngine({ initialSceneConfig: sceneConfig });
 Time.tickRate = TICK_RATE;
 
-const movingPointInstance = gameEngine.findGameObjectByName(movingPointPrefab.name);
-if (!movingPointInstance)
-    throw new Error(`Cannot find game object with name ${movingPointPrefab.name}!`)
+// Get reference to game objects and components in the game engine.
+const movingPointInstance = gameEngine.findGameObjectByName(movingPointPrefab.name)!;
+const movingPointComponent = movingPointInstance.getComponent(MovingPoint)!;
 
-const movingPointComponent = movingPointInstance.getComponent(MovingPoint);
-if (!movingPointComponent)
-    throw new Error(`Cannot find component with class ${MovingPoint.name}!`)
-
+// Render Clock Initialization
 const renderClock = new Clock(() => render(), 1000 / REFRESH_RATE);
 
 const render = () => {
-    // TODO : Interpolation
     const position = Math.round(movingPointInstance.transform.position.x);
 
-    const pointGraphic = position > 0 ? "🏀" : "🏀";
+    const player = "0";
     const leftSpace = " ".repeat(Math.max(0, position));
     const rightSpace = " ".repeat(Math.max(0, SCREEN_WIDTH - position));
 
     console.clear();
     console.log(`Refresh Rate: ${REFRESH_RATE}, Tick Rate: ${TICK_RATE}, Ticks: ${gameEngine.tick}`);
-    console.log(`\n➡️${leftSpace}${pointGraphic}${rightSpace}|`)
+    console.log(`\n-->|${leftSpace}${player}${rightSpace}|`)
     console.log("\nHeadless Game Engine Demo");
     console.log("\nPress Space to Jump.");
     console.log("Press Ctrl-C to Quit.");
@@ -118,7 +118,7 @@ function keypressEventHandler(str: string, key: readline.Key) {
 }
 
 function onJumpPressed() {
-    movingPointComponent?.jump();
+    movingPointComponent.jump();
 }
 
 main();

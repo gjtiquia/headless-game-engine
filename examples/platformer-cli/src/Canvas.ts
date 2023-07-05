@@ -43,6 +43,17 @@ export class Canvas {
         console.log(topBorder.repeat(2 + this._size.x));
         this._characterTable.forEach(row => console.log(`${leftBorder}${row.join("")}${rightBorder}`))
         console.log(bottomBorder.repeat(2 + this._size.x));
+
+        console.log("\nHeadless Game Engine: Command-Line Platformer Example");
+        console.log("\nPress Ctrl-C to Quit.\n");
+        console.log("\nControls: WASD / Arrow Keys / Space");
+        console.log("\nInstructions:");
+        console.log("\n- Move Left: W or Left Arrow");
+        console.log("\n- Move Right: D or Right Arrow");
+        console.log("\n- Stop Moving: S or Down Arrow");
+        console.log("\n- Jump: W or Up Arrow or Space\n");
+        console.log("\nNote: Command line can only listen to keydown events. The player will NOT stop moving if you stop pressing left/right.");
+
     }
 
     public drawRect(bottomLeftPosition: Vector2, size: Vector2, character: string = "x"): void {
