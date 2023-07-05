@@ -3,14 +3,15 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start": "npm run build && node dist/index.js",
+        "start": "npm run build && serve dist",
         "dev": "tsup src/index.ts --format esm --clean --watch",
-        "build": "tsup src/index.ts --format esm --clean",
+        "build": "tsup src/index.ts --format esm --clean && cp -a ./public/. ./dist/",
         "test": "jest",
         "test:coverage": "jest --coverage",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "dependencies": {
+        "serve": "*",
         "@headless-game-engine/core": "*",
         "@headless-game-engine/clock": "*",
         "@headless-game-engine/physics-2d": "*"
